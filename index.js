@@ -7,6 +7,10 @@ const path = require("path");
 require("dotenv").config();
 const port = process.env.PORT;
 
+//Cài đặt mongoose
+const database = require("./config/database");
+database.connect();
+
 //Cấu hình Pug vào dự án
 app.set("views", "./view");//Đọc file PUG ở thư mục view
 app.set("view engine", 'pug');//Khai báo dự án sử dụng template: PUG

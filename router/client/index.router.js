@@ -1,4 +1,4 @@
-const HomePage = require("../client/HomePage.router");
+const HomePage = require("./HomePage.router");
 
 module.exports = (app) =>{
     app.use("/", HomePage);

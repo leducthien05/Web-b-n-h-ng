@@ -1,5 +1,5 @@
 module.exports.homepage = async (req, res)=>{
-    res.render("client/page/homepage/index", {
-        
+    res.render("client/page/home/index", {
+        titlePage: "Trang chủ"
     })
 }

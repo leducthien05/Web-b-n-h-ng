@@ -11,6 +11,9 @@ const port = process.env.PORT;
 app.set("views", "./view");//Đọc file PUG ở thư mục view
 app.set("view engine", 'pug');//Khai báo dự án sử dụng template: PUG
 
+//Cấu hình file tĩnh
+app.use(express.static(`${__dirname}/public`));
+
 //Cấu hình Router 
 const router = require("./router/admin/index.router");
 const routerClient = require("./router/client/index.router");

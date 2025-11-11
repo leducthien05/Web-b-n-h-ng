@@ -1,0 +1,18 @@
+extends ../../layout/default.pug
+
+block main
+    .container.my-3
+        .row
+            .col-12
+                //- +box-head("Danh sách sản phẩm")
+        .row
+            each item in product
+                .col-4.mb-3
+                    .product-item
+                        .inner-image
+                            img(src=item.image, alt="iPhone 9")
+                        .inner-content
+                            h3.inner-title #{item.title}
+                            .inner-price-new #{item.price}
+                            .inner-price-old #{item.newPrice}
+                            .inner-discount #{item.discoutPercentage}

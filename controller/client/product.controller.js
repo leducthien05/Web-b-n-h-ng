@@ -1,5 +1,7 @@
 const Product = require("../../model/product.model");
 
+const newPriceArray = require("../../helper/newPrice.helper");
+
 module.exports.product = async (req, res)=>{
     const find = {
         deleted: false,
@@ -9,13 +11,10 @@ module.exports.product = async (req, res)=>{
     const products = await Product.find(find);
     
     //Tính giá mới
-    products.forEach(item =>{
-        return item.newPrice =  item.price * (1 - item.discountPercentage/100);
-    })
-    console.log(products);
+    const newProducts = newPriceArray.newPriceArray(products);
 
     res.render("client/page/products/index", {
-        product: products,
+        product: newProducts,
         titlePage: "Danh sách sản phẩm"
     })
 }

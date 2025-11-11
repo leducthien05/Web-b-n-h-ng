@@ -24,6 +24,7 @@ const routerClient = require("./router/client/index.router");
 
 //Gọi hàm sử dụng router
 routerClient(app);
+router(app);
 
 app.listen(port, () => {
   console.log(`🚀 Server chạy ở http://localhost:${port}`);

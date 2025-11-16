@@ -1,49 +1,59 @@
 extends ../../layout/default.pug
+include ../../mixin/statusList.pug
 
 block main 
-    table(
-        class ="table.table-hover table-sm"
-        checkbox-multi
-    ) 
-        thead 
-            tr 
-                th STT
-                th Hình ảnh
-                th Tiêu đề
-                th Giá
-                th Vị trí
-                th Trạng thái
-                th Hành động
-        tbody
-            each item, index in products
-                tr 
-                    td #{index + 1}
-                    td 
-                        img(
-                            src=item.image 
-                            alt=item.title
-                            hight= "auto"
-                            width = "100px"
-                        )
-                    td #{item.title}
-                    td #{item.price}
-                    td #{item.position} 
-                    td 
-                        if(item.status === "active")
-                             a(href="javascript:;"
-                                class="badge badge-success"
-                                change-status-multi
-                                status = item.status
-                                id = item.id
-                            ) Hoạt động
-                        else 
-                            a(href="javascript:;" 
-                                class="badge badge-danger"
-                                change-status-multi
-                                status = item.status
-                                id = item.id
-                            ) Dừng hoạt động
-                    td 
-                        button(class="btn btn-warning btn-sm") Sửa
-                        button(class="btn btn-danger btn-sm ml-1") Xóa
-            
+    .card.mb-3
+        .card-header Bộ lọc và Tìm kiếm
+            .card-body
+                +buttonStatus(filterStatus)
+
+    .card.mb-3
+        .card-header Danh sách 
+            .card-body
+                table(
+                    class ="table.table-hover table-sm"
+                    checkbox-multi
+                ) 
+                    thead 
+                        tr 
+                            th STT
+                            th Hình ảnh
+                            th Tiêu đề
+                            th Giá
+                            th Vị trí
+                            th Trạng thái
+                            th Hành động
+                    tbody
+                        each item, index in products
+                            tr 
+                                td #{index + 1}
+                                td 
+                                    img(
+                                        src=item.image 
+                                        alt=item.title
+                                        hight= "auto"
+                                        width = "100px"
+                                    )
+                                td #{item.title}
+                                td #{item.price}
+                                td #{item.position} 
+                                td 
+                                    if(item.status === "active")
+                                        a(href="javascript:;"
+                                            class="badge badge-success"
+                                            change-status-multi
+                                            status = item.status
+                                            id = item.id
+                                        ) Hoạt động
+                                    else 
+                                        a(href="javascript:;" 
+                                            class="badge badge-danger"
+                                            change-status-multi
+                                            status = item.status
+                                            id = item.id
+                                        ) Dừng hoạt động
+                                td 
+                                    button(class="btn btn-warning btn-sm") Sửa
+                                    button(class="btn btn-danger btn-sm ml-1") Xóa
+    script(src="/admin/JS/script.js") 
+                        

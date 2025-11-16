@@ -1,0 +1,23 @@
+extends ../../layout/default.pug
+
+block main 
+    table(
+        class ="table.table-hover table-sm"
+        checkbox-multi
+    ) 
+        thead 
+            tr 
+                th  
+                    input(
+                        type="checkbox"
+                        name="checkall"
+                    )
+                th STT
+                th Hình ảnh
+                th Tiêu đề
+                th Giá
+                th Vị trí
+                th Trạng thái
+                th Hành động
+        tbody
+            

@@ -1,7 +1,8 @@
 const Product = require("../../model/product.model");
 
-const filterStatus = require("../../helper/filterStatus");
-const search = require("../../helper/search");
+const filterStatus = require("../../helper/filterStatus.helper");
+const search = require("../../helper/search.helper");
+const paginationHelper = require("../../helper/pagination.helper");
 
 module.exports.index = async (req, res)=>{
     let find = {
@@ -19,11 +20,15 @@ module.exports.index = async (req, res)=>{
     if(searchProduct.regex){
         find.title = searchProduct.regex;
     }
-    const products = await Product.find(find);
+    //Phân trang, cần dùng await vì bên trong sử dụng async
+    const objectPagination = await paginationHelper.pagination(req.query, find);
+
+    const products = await Product.find(find).limit(objectPagination.limitItem).skip(objectPagination.indexProduct);
     res.render("admin/page/products/index", {
         titlePage: "Danh sách sản phẩm",
         products: products,
         filterStatus: filter,
-        keyword: searchProduct.keyword
-    })
+        keyword: searchProduct.keyword,
+        pagination: objectPagination
+    });
 }

@@ -36,3 +36,22 @@ if(formSearch){
     })
 }
 // ==================================End Form Search========================================//
+
+// ==================================Pagination========================================//
+const buttonPagation = document.querySelectorAll("[number-page]");
+if(buttonPagation.length > 0){
+    let url = new URL(window.location.href);
+    buttonPagation.forEach(button =>{
+        button.addEventListener("click", (e)=>{
+            e.preventDefault();
+            const currentPage = button.getAttribute("number-page");
+            if(currentPage){
+                url.searchParams.set("page", currentPage);
+            }else{
+                url.searchParams.delete("page");
+            }
+            window.location.href = url.href;
+        })
+    })
+}
+// ==================================End Pagination========================================//

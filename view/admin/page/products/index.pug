@@ -48,14 +48,14 @@ block main
                                     if(item.status === "active")
                                         a(href="javascript:;"
                                             class="badge badge-success"
-                                            change-status-multi
+                                            change-status
                                             status = item.status
                                             id = item.id
                                         ) Hoạt động
                                     else 
                                         a(href="javascript:;" 
                                             class="badge badge-danger"
-                                            change-status-multi
+                                            change-status
                                             status = item.status
                                             id = item.id
                                         ) Dừng hoạt động
@@ -63,5 +63,11 @@ block main
                                     button(class="btn btn-warning btn-sm") Sửa
                                     button(class="btn btn-danger btn-sm ml-1") Xóa
     +pagination(pagination)
+    form(
+        action = ""
+        method = "POST"
+        form-change-status 
+        data-path = `${prefixAdmin}/products/change-status/`
+    )
     script(src="/admin/JS/script.js") 
                         

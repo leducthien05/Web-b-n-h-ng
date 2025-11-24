@@ -55,3 +55,25 @@ if(buttonPagation.length > 0){
     })
 }
 // ==================================End Pagination========================================//
+
+
+// ==================================Change Status========================================//
+
+const ChangeStatus = document.querySelectorAll("[change-status]");
+if(ChangeStatus.length > 0){
+    const formchange = document.querySelector("[form-change-status]");
+    const path = formchange.getAttribute("data-path");
+    ChangeStatus.forEach((button)=>{
+        button.addEventListener("click", ()=>{
+            const id = button.getAttribute("id");
+            const status = button.getAttribute("status");
+            let newStatus = status == "active" ? "inactive" : "active";
+            const action = path + `${newStatus}/${id}?_method=PATCH`;
+            console.log(action);
+            formchange.action = action;
+            formchange.submit();
+        })
+    })
+}
+
+// ==================================End Change Status========================================//

@@ -39,6 +39,18 @@ module.exports.change_status = async (req, res)=>{
     await Product.updateOne({
         _id: id
     }, {status: status});
-    res.redirect("/admin/products");
-    // res.redirect('back')
+    // res.redirect("/admin/products");
+    res.redirect(req.get("referer") || "/");
+
+}
+
+module.exports.change_multi = async (req, res)=>{
+    const ids = req.body.ids.split(", ");
+    const status = req.body.status;
+
+    await Product.updateMany({
+        _id: ids
+    }, {status: status});
+
+    res.redirect(req.get("referer") || "/");
 }

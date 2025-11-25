@@ -77,3 +77,49 @@ if(ChangeStatus.length > 0){
 }
 
 // ==================================End Change Status========================================//
+
+
+// ==================================Change Multi Status========================================//
+const checkboxMulti = document.querySelector("[checkbox-multi]");
+if(checkboxMulti){
+    const checkall = checkboxMulti.querySelector("[checkbox-all]");
+    const checkbox = checkboxMulti.querySelectorAll("[checkbox-status]");
+    checkall.addEventListener("click", ()=>{
+        checkbox.forEach(item =>{
+            item.checked = checkall.checked;
+        });
+    });
+    checkbox.forEach(item =>{
+        item.addEventListener("click", ()=>{
+            const countchecked = checkboxMulti.querySelectorAll("input[name = 'id']:checked").length;
+            if(countchecked == checkbox.length){
+                checkall.checked = true;
+            }else{
+                checkall.checked = false;
+            }
+        });
+    });
+}
+
+//Form chage multi
+const formChangeMulti = document.querySelector("[form-change-multi]");
+if(formChangeMulti){
+    formChangeMulti.addEventListener("submit", (e)=>{
+        e.preventDefault();
+        const checkboxMulti = document.querySelector("[checkbox-multi]");
+        const inputschecked = checkboxMulti.querySelectorAll("input[name = 'id']:checked");
+        if(inputschecked.length > 0){
+            const inputIDs = formChangeMulti.querySelector("input[name = 'ids']");
+            let ids = [];
+            inputschecked.forEach(item =>{
+                const id = item.value;
+                ids.push(id);
+            });
+            inputIDs.value = ids.join(", ");
+        }
+        
+        formChangeMulti.submit();
+    });
+}
+
+// ==================================End Change Multi Status========================================//

@@ -7,6 +7,10 @@ const path = require("path");
 const methodOverride = require("method-override");
 app.use(methodOverride('_method'));
 
+//Cấu hình bodyParser
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
+
 //Cấu hình env
 require("dotenv").config();
 const port = process.env.PORT;

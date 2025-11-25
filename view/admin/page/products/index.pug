@@ -2,6 +2,7 @@ extends ../../layout/default.pug
 include ../../mixin/statusList.pug
 include ../../mixin/search.pug
 include ../../mixin/pagination.pug
+include ../../mixin/changeStatus.pug
 
 
 block main 
@@ -17,25 +18,7 @@ block main
     .card.mb-3
         .card-header Danh sách 
             .card-body 
-                form(
-                    action = `${prefixAdmin}/products/change-multi-status?_method=PATCH`
-                    method = "POST"
-                    form-change-multi
-                )
-                    .d-flex.align-items-status
-                        .form-group
-                            select(name="status" class="form-control")
-                                option(value="active") Hoạt động 
-                                option(valu="inactive") Ngừng hoạt động
-                        .form-group 
-                            input(
-                                type="text"
-                                name="ids"
-                                value=""
-                                class="form-control"
-                                hidden
-                            ) 
-                        button(type = "submit" class="btn btn-primary align-self-start") Áp dụng
+                +change(`${prefixAdmin}/products/change-multi-status?_method=PATCH`)
             .card-body
                 table(
                     class ="table.table-hover table-sm"

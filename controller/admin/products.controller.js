@@ -48,9 +48,24 @@ module.exports.change_multi = async (req, res)=>{
     const ids = req.body.ids.split(", ");
     const status = req.body.status;
 
-    await Product.updateMany({
-        _id: ids
-    }, {status: status});
+    try {
+        switch (status) {
+            case "active":
+                await Product.updateMany({
+                    _id: ids
+                }, {status: "active"});
+                break;
+            case "inactive":
+                await Product.updateMany({
+                    _id: ids
+                }, {status: "inactive"})
+            default:
+                break;
+        }
+    } catch (error) {
+        console.log(error); 
+    }
+    
 
     res.redirect(req.get("referer") || "/");
 }

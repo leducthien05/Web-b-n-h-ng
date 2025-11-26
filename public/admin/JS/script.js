@@ -79,7 +79,7 @@ if(ChangeStatus.length > 0){
 // ==================================End Change Status========================================//
 
 
-// ==================================Change Multi Status========================================//
+// ==================================Change Multi========================================//
 const checkboxMulti = document.querySelector("[checkbox-multi]");
 if(checkboxMulti){
     const checkall = checkboxMulti.querySelector("[checkbox-all]");
@@ -104,10 +104,18 @@ if(checkboxMulti){
 //Form chage multi
 const formChangeMulti = document.querySelector("[form-change-multi]");
 if(formChangeMulti){
-    formChangeMulti.addEventListener("submit", (e)=>{
+    formChangeMulti.addEventListener("submit", (e)=>{ 
         e.preventDefault();
         const checkboxMulti = document.querySelector("[checkbox-multi]");
         const inputschecked = checkboxMulti.querySelectorAll("input[name = 'id']:checked");
+        const typechange = e.target.elements.status.value;
+        if(typechange == "delete-all"){
+            const isconfirm = confirm("Bạn có chắc muốn xóa tất cả chứ?");
+
+            if(!isconfirm){
+                return;
+            }
+        }
         if(inputschecked.length > 0){
             const inputIDs = formChangeMulti.querySelector("input[name = 'ids']");
             let ids = [];
@@ -115,11 +123,29 @@ if(formChangeMulti){
                 const id = item.value;
                 ids.push(id);
             });
-            inputIDs.value = ids.join(", ");
+        inputIDs.value = ids.join(", ");
         }
-        
         formChangeMulti.submit();
     });
 }
 
-// ==================================End Change Multi Status========================================//
+// ==================================End Change Multi========================================//
+
+// ==================================Delete Item========================================//
+const buttonDelete = document.querySelectorAll("[button-delete]");
+if(buttonDelete.length > 0){
+    const formDelete = document.querySelector("[form-delete]");
+    const path = formDelete.getAttribute("data-path");
+    buttonDelete.forEach(button =>{
+        button.addEventListener("click", ()=>{
+            const isconfirm = confirm("Bạn có chắc muốn xóa không?");
+            if(isconfirm){
+                const id = button.getAttribute("id");
+                const action = path + `${id}?_method=DELETE`;
+                formDelete.action = action;
+                formDelete.submit();
+            }
+        })
+    });
+}
+// ==================================End Delete Item========================================//

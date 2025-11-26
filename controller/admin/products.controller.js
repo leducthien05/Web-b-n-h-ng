@@ -47,6 +47,7 @@ module.exports.change_status = async (req, res)=>{
 module.exports.change_multi = async (req, res)=>{
     const ids = req.body.ids.split(", ");
     const status = req.body.status;
+    console.log(req.body);
 
     try {
         switch (status) {
@@ -58,7 +59,11 @@ module.exports.change_multi = async (req, res)=>{
             case "inactive":
                 await Product.updateMany({
                     _id: ids
-                }, {status: "inactive"})
+                }, {status: "inactive"});
+            case "delete-all":
+                await Product.updateMany({
+                    _id: ids
+                }, {deleted: true});
             default:
                 break;
         }
@@ -67,5 +72,15 @@ module.exports.change_multi = async (req, res)=>{
     }
     
 
+    res.redirect(req.get("referer") || "/");
+}
+
+module.exports.delete = async (req, res)=>{
+    const id = req.params.id;
+    try {
+        await Product.updateOne({_id: id}, {deleted: true, deletedAt: new Date()}); 
+    } catch (error) {
+        console.log(error);
+    }
     res.redirect(req.get("referer") || "/");
 }

@@ -7,8 +7,10 @@ mixin change(path)
         .d-flex.align-items-status
             .form-group
                 select(name="status" class="form-control")
+                    option(disable selected) -- Chọn hành động --
                     option(value="active") Hoạt động 
                     option(value="inactive") Ngừng hoạt động
+                    option(value="delete-all") Xóa tất cả
             .form-group 
                 input(
                     type="text"

@@ -23,7 +23,7 @@ module.exports.index = async (req, res)=>{
     //Phân trang, cần dùng await vì bên trong sử dụng async
     const objectPagination = await paginationHelper.pagination(req.query, find);
 
-    const products = await Product.find(find).limit(objectPagination.limitItem).skip(objectPagination.indexProduct);
+    const products = await Product.find(find).sort({position: "asc"}).limit(objectPagination.limitItem).skip(objectPagination.indexProduct);
     res.render("admin/page/products/index", {
         titlePage: "Danh sách sản phẩm",
         products: products,
@@ -47,7 +47,6 @@ module.exports.change_status = async (req, res)=>{
 module.exports.change_multi = async (req, res)=>{
     const ids = req.body.ids.split(", ");
     const status = req.body.status;
-    console.log(req.body);
 
     try {
         switch (status) {
@@ -60,10 +59,22 @@ module.exports.change_multi = async (req, res)=>{
                 await Product.updateMany({
                     _id: ids
                 }, {status: "inactive"});
+                break;
             case "delete-all":
                 await Product.updateMany({
                     _id: ids
                 }, {deleted: true});
+                break;
+            case "position":
+                for(const item of ids){
+                    let[id, newposition] = item.split("-");
+                    newposition = parseInt(newposition);
+                    await Product.updateOne({
+                        _id: id
+                    },{position: newposition});
+                }
+                
+                break;
             default:
                 break;
         }

@@ -7,6 +7,27 @@ const path = require("path");
 const methodOverride = require("method-override");
 app.use(methodOverride('_method'));
 
+// Cookie parser
+const cookieParser = require('cookie-parser');
+app.use(cookieParser('Thienle'));
+
+// Session
+const session = require('express-session');
+app.use(session({
+    secret: 'Thienle',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { 
+        secure: false,  // local dùng HTTP nên phải để false
+        maxAge: 60000
+    }
+}));
+
+// Flash
+const flash = require('express-flash');
+app.use(flash());
+
+
 //Cấu hình bodyParser
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));

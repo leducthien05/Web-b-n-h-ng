@@ -40,6 +40,7 @@ module.exports.change_status = async (req, res)=>{
         _id: id
     }, {status: status});
     // res.redirect("/admin/products");
+    req.flash("success", "Thay đổi trạng thái sản phẩm thành công thành công!");
     res.redirect(req.get("referer") || "/");
 
 }
@@ -54,16 +55,20 @@ module.exports.change_multi = async (req, res)=>{
                 await Product.updateMany({
                     _id: ids
                 }, {status: "active"});
+                req.flash("success", `Thay đổi trạng thái ${ids.length} sản phẩm thành công thành công!`);
+
                 break;
             case "inactive":
                 await Product.updateMany({
                     _id: ids
                 }, {status: "inactive"});
+                req.flash("success", `Thay đổi trạng thái ${ids.length} sản phẩm thành công thành công!`);
                 break;
             case "delete-all":
                 await Product.updateMany({
                     _id: ids
                 }, {deleted: true});
+                req.flash("success", `Xóa thành công ${ids.length} sản phẩm thành công thành công!`);
                 break;
             case "position":
                 for(const item of ids){
@@ -72,6 +77,7 @@ module.exports.change_multi = async (req, res)=>{
                     await Product.updateOne({
                         _id: id
                     },{position: newposition});
+                    req.flash("success", `Thay đổi vị trí ${ids.length} sản phẩm thành công thành công!`);
                 }
                 
                 break;
@@ -82,7 +88,6 @@ module.exports.change_multi = async (req, res)=>{
         console.log(error); 
     }
     
-
     res.redirect(req.get("referer") || "/");
 }
 
@@ -93,5 +98,7 @@ module.exports.delete = async (req, res)=>{
     } catch (error) {
         console.log(error);
     }
+
+    req.flash("success", "Xóa thành công sản phẩm vào thùng rác!");
     res.redirect(req.get("referer") || "/");
 }

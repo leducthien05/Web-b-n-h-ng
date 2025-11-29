@@ -16,7 +16,6 @@ if(buttonStatus.length > 0){
         });
     });
 }
-// ==================================End Button Status========================================//
 
 // ==================================Form Search========================================//
 const formSearch = document.querySelector("#form-search");
@@ -35,7 +34,6 @@ if(formSearch){
         window.location.href = url.href;
     })
 }
-// ==================================End Form Search========================================//
 
 // ==================================Pagination========================================//
 const buttonPagation = document.querySelectorAll("[number-page]");
@@ -54,7 +52,6 @@ if(buttonPagation.length > 0){
         })
     })
 }
-// ==================================End Pagination========================================//
 
 
 // ==================================Change Status========================================//
@@ -76,7 +73,6 @@ if(ChangeStatus.length > 0){
     })
 }
 
-// ==================================End Change Status========================================//
 
 
 // ==================================Change Multi========================================//
@@ -137,7 +133,6 @@ if(formChangeMulti){
     });
 }
 
-// ==================================End Change Multi========================================//
 
 // ==================================Delete Item========================================//
 const buttonDelete = document.querySelectorAll("[button-delete]");
@@ -156,4 +151,17 @@ if(buttonDelete.length > 0){
         })
     });
 }
-// ==================================End Delete Item========================================//
+
+// ==================================Show Alert========================================//
+
+const showAlert = document.querySelector("[show-alert]");
+if(showAlert){
+    const time = parseInt(showAlert.getAttribute("data-time"));
+    const closeAlert = showAlert.querySelector(".close-alert");
+    closeAlert.addEventListener("click", ()=>{
+        showAlert.classList.add("alert-hidden");
+    })
+    setTimeout(()=>{
+        showAlert.classList.add("alert-hidden");
+    }, time);
+}

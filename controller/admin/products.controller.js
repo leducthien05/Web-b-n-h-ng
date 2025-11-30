@@ -1,5 +1,6 @@
 const Product = require("../../model/product.model");
 
+const prefixAdmin = require("../../config/system");
 const filterStatus = require("../../helper/filterStatus.helper");
 const search = require("../../helper/search.helper");
 const paginationHelper = require("../../helper/pagination.helper");
@@ -101,4 +102,29 @@ module.exports.delete = async (req, res)=>{
 
     req.flash("success", "Xóa thành công sản phẩm vào thùng rác!");
     res.redirect(req.get("referer") || "/");
+}
+
+module.exports.create = async (req, res)=>{
+    res.render("admin/page/products/create", {
+        titlePage: "Thêm sản phẩm"
+    })
+}
+
+module.exports.createPost = async (req, res)=>{
+    req.body.price = parseInt(req.body.price);
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    req.body.stock = parseInt(req.body.stock);
+
+    if(req.body.position == ""){
+        const count = await Product.countDocuments();
+        req.body.position = count + 1;
+    }else{
+        req.body.position = parseInt(req.body.position);
+    }
+
+    const newProduct = new Product(req.body);
+    await newProduct.save();
+
+    req.flash("success", "Thêm mới thành công!");
+    res.redirect(`${prefixAdmin.prefixAdmin}/products`);
 }

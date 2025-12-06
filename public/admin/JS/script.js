@@ -165,3 +165,16 @@ if(showAlert){
         showAlert.classList.add("alert-hidden");
     }, time);
 }
+
+// ==================================Show Image========================================//
+const uploadimage = document.querySelector("[upload-image]");
+if(uploadimage){
+    const uploadImageInput = uploadimage.querySelector("[upload-image-input]");
+    const uploadImageImg = uploadimage.querySelector("[upload-image-img]");
+    uploadImageInput.addEventListener("change", (e)=>{
+        const file = e.target.files[0];
+        if(file){
+            uploadImageImg.src = URL.createObjectURL(file);
+        }
+    });
+}

@@ -121,8 +121,9 @@ module.exports.createPost = async (req, res)=>{
     }else{
         req.body.position = parseInt(req.body.position);
     }
-
-    req.body.image = `/admin/upload/${req.file.filename}`;
+    if(req.body.image){
+        req.body.image = `${prefixAdmin.prefixAdmin}/upload/${req.file.filename}`;
+    }
 
     const newProduct = new Product(req.body);
     await newProduct.save();

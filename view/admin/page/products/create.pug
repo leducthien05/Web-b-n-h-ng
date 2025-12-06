@@ -1,7 +1,9 @@
 extends ../../layout/default.pug
+include ../../mixin/alert.pug
 
 block main 
     h1(class="mb-4") Trang tạo mới sản phẩm
+    +error("5000")
 
     form(
         action = `${prefixAdmin}/products/create`
@@ -56,7 +58,10 @@ block main
                 value="0"
                 min="0"
             )
-        div(class="form-group")
+        div(
+            class="form-group"
+            upload-image
+        )
             label(for="image") Ảnh
             input(
                 type="file"
@@ -64,6 +69,12 @@ block main
                 id="image"
                 name="image"
                 accept="image/*"
+                upload-image-input
+            )
+            img(
+                src = ""
+                class = "img-preview"
+                upload-image-img
             )
         div(class="form-group")
             label(for="position") Vị trí

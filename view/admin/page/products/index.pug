@@ -93,7 +93,8 @@ block main
                                             id = item.id
                                         ) Dừng hoạt động
                                 td 
-                                    button(
+                                    a(
+                                        href=`${prefixAdmin}/products/edit/${item.id}`
                                         class="btn btn-warning btn-sm"
                                         id = item.id 
                                         button-update

@@ -131,3 +131,45 @@ module.exports.createPost = async (req, res)=>{
     req.flash("success", "Thêm mới thành công!");
     res.redirect(`${prefixAdmin.prefixAdmin}/products`);
 }
+
+module.exports.edit = async (req, res)=>{
+    const id = req.params.id;
+    const product = await Product.findOne({
+        _id: id,
+        deleted: false
+    });
+    res.render("admin/page/products/edit", {
+        titlePage: "Chỉnh sửa sản phẩm",
+        product: product
+    });
+}
+
+module.exports.editPatch = async (req, res)=>{
+    const id = req.params.id;
+    req.body.price = parseInt(req.body.price);
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    req.body.stock = parseInt(req.body.stock);
+
+    if(req.body.position == ""){
+        const count = await Product.countDocuments();
+        req.body.position = count + 1;
+    }else{
+        req.body.position = parseInt(req.body.position);
+    }
+    if(req.body.image){
+        req.body.image = `${prefixAdmin.prefixAdmin}/upload/${req.file.filename}`;
+    }
+
+    try {
+        await Product.updateOne({
+            _id: id
+        }, req.body);
+        res.redirect(req.get("referer") || "/");
+    } catch (error) {
+        console.log(error);
+        res.redirect(req.get("referer") || "/");
+    }
+    
+
+
+}

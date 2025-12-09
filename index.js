@@ -41,7 +41,7 @@ const database = require("./config/database");
 database.connect();
 
 //Cấu hình Pug vào dự án
-app.set("views", "./view");//Đọc file PUG ở thư mục view
+app.set("views", `${__dirname}/view`);//Đọc file PUG ở thư mục view
 app.set("view engine", 'pug');//Khai báo dự án sử dụng template: PUG
 
 //Biến local
@@ -49,7 +49,7 @@ const systemConfig = require("./config/system");
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
 //Cấu hình file tĩnh
-app.use(express.static(`${__dirname}/public`));
+app.use(express.static(`${__dirname}/public/`));
 
 //Cấu hình Router 
 const router = require("./router/admin/index.router");

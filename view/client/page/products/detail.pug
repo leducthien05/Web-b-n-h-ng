@@ -1,0 +1,66 @@
+extends ../../layout/default.pug
+
+block main
+    .container.product-detail.mt-4
+        .row
+            .col-md-6
+                .card.product-image-card
+                    .card-body.text-center
+                        img(
+                            src=product.image
+                            alt=product.title
+                            class="product-image"
+                        )
+
+            .col-md-6
+                .card.product-info-card
+                    .card-body
+                        h2.product-title= product.title
+
+                        if product.discountPercentage > 0
+                            .price-discount-box
+                                span(
+                                    class = "discount-badge"
+                                ) -#{product.discountPercentage}%
+                                span(
+                                    class = "original-price"
+                                ) Giá gốc: #{product.price.toLocaleString()} đ
+
+                            h3(class = "final-price")
+                                | Giá khuyến mãi:
+                                | #{(product.price - (product.price * product.discountPercentage / 100)).toLocaleString()} đ
+                        else
+                            h3(
+                                class = "final-price"
+                            )
+                                | Giá: #{product.price} đ
+
+                        hr
+
+                        p
+                            strong Mô tả:
+                            | !{product.description}
+
+                        p
+                            strong Kho còn:
+                            span(
+                                class = "stock-badge"
+                            ) #{product.stock}
+
+                        p
+                            strong Trạng thái: 
+                            -if(product.status == "active")
+                                span(
+                                    class = "status-active"
+                                ) Hoạt động
+                            -else
+                                span(
+                                    class = "status-inactive"
+                                ) Ngừng bán
+
+                        button(
+                            class = "btn-add-cart"
+                            type="button"
+                        ) Thêm vào giỏ hàng
+
+        

@@ -1,5 +1,51 @@
 extends ../../layout/default
 
 block main 
-    h1 Trang chủ
+    block main
+    .card.mb-3
+        .card-header Danh sách sản phẩm
+        .card-body
+            .row
+                each item in product
+                    .col-3.mb-4
+                        .product-card.border.rounded.p-2
+                            a(
+                                href=`/products/detail/${item.id}`
+                                style="text-decoration:none; color:inherit;"
+                            )
+                                img(
+                                    src=item.image
+                                    alt=item.title
+                                    width="100%"
+                                    style="border-radius: 8px;"
+                                )
+
+                                h5.mt-2 #{item.title}
+
+                                //- Giá
+                                if item.discountPercentage
+                                    - const discountedPrice = item.price - (item.price * item.discountPercentage / 100)
+                                    p.mb-1
+                                        span(style="text-decoration: line-through; color:#888; margin-right:6px;")
+                                            | #{item.price.toLocaleString()} đ
+                                        span(
+                                            style="color:red; font-weight:600; font-size:18px; margin-right:6px;"
+                                        ) #{discountedPrice.toLocaleString()} đ
+                                        span.badge.badge-danger -#{item.discountPercentage}%
+                                else
+                                    p.mb-1
+                                        span(style="font-size:18px; font-weight:bold;") #{item.price.toLocaleString()} đ
+
+                                //- Button
+                                .mt-2
+                                    a(
+                                        href=`/products/detail/${item.slug}`
+                                        class="btn btn-sm btn-primary btn-block"
+                                    ) Xem chi tiết
+
+    //- Phân trang (nếu có)
+    if pagination
+        .mt-3
+            +pagination(pagination)
+
     

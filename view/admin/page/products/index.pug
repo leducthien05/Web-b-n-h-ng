@@ -99,6 +99,11 @@ block main
                                         id = item.id 
                                         button-update
                                     ) Sửa
+                                    a(
+                                        href=`${prefixAdmin}/products/detail/${item.id}`
+                                        class="btn btn-secondary btn-sm"
+                                        id = item.id 
+                                    ) Chi tiết
                                     button(
                                         class="btn btn-danger btn-sm ml-1"
                                         id = item.id 

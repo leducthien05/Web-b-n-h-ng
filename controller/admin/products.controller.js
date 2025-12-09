@@ -173,3 +173,15 @@ module.exports.editPatch = async (req, res)=>{
 
 
 }
+
+module.exports.detail = async (req, res)=>{
+    const id = req.params.id;
+    const product = await Product.findOne({
+        _id: id,
+        deleted: false
+    });
+    res.render("admin/page/products/detail", {
+        titlePage: product.title,
+        product:product
+    });
+}

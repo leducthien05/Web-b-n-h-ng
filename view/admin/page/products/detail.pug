@@ -1,0 +1,63 @@
+extends ../../layout/default.pug
+
+
+block main
+    .card.mb-3
+        .card-header Chi tiết sản phẩm
+        .card-body
+            .row
+                .col-4
+                    img(
+                        src=product.image
+                        alt=product.title
+                        width="100%"
+                        style="border-radius: 10px;"
+                    )
+                .col-5
+                    h3 #{product.title}
+
+                    //- Giá
+                    if product.discountPercentage
+                        - const discountedPrice = product.price - (product.price * product.discountPercentage / 100)
+                        p.mb-1
+                            span(style="text-decoration: line-through; color: #888; margin-right: 8px;")
+                                | #{product.price.toLocaleString()} đ
+                            span(style="color: red; font-weight: bold; font-size: 20px; margin-right: 8px;")
+                                | #{discountedPrice.toLocaleString()} đ
+                            span.badge.badge-danger
+                                | -#{product.discountPercentage}%
+                    else
+                        p.mb-1
+                            span(style="font-size: 20px; font-weight: bold;")
+                                | #{product.price.toLocaleString()} đ
+
+                    //- Thông tin
+                    p.mt-3
+                        strong Loại sản phẩm: 
+                        |  #{product.category}
+
+                    p
+                        strong Tồn kho: 
+                        |  #{product.stock}
+
+                    p
+                        strong Trạng thái: 
+                        -if (product.status === "active")
+                            span.badge.badge-success ml-1 Hoạt động
+                        -else
+                            span.badge.badge-danger ml-1 Ngừng hoạt động
+
+                    p
+                        strong Mô tả: 
+                        |  #{product.description}
+
+    //- Back button
+    .mt-3
+        a(
+            href=`${prefixAdmin}/products`
+            class="btn btn-outline-primary"
+        ) ← Quay lại danh sách sản phẩm
+        a(
+            href=`${prefixAdmin}/products/edit/${product.id}`
+            class="btn btn-primary"
+        ) Chỉnh sửa

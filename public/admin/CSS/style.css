@@ -94,3 +94,51 @@
     padding: 15px;
     border-radius: 5px;
 }
+
+/* Chi tiết sản phẩm */
+
+.product-detail__container {
+  display: flex;
+  gap: 30px;
+}
+
+.left img {
+  width: 350px;
+  border-radius: 10px;
+}
+
+.product-title {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.price {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #999;
+  margin-right: 10px;
+}
+
+.discounted-price {
+  color: #e60000;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.discount-tag {
+  background: #e60000;
+  color: #fff;
+  padding: 3px 6px;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+.actions button {
+  margin-right: 15px;
+  padding: 10px 20px;
+  cursor: pointer;
+}

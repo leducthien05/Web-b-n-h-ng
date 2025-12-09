@@ -27,7 +27,7 @@ module.exports.detail = async (req, res)=>{
             deleted:false
         });
         console.log(product);
-        console.log(req.params.slug)
+        console.log(req.params.slug);
         res.render("client/page/products/detail", {
             titlePage: product.title,
             product:product

@@ -178,3 +178,33 @@ if(uploadimage){
         }
     });
 }
+
+// ==================================Sort products========================================//
+const selectSort = document.querySelector("[sort-select]");
+if(selectSort){
+    let url = new URL(window.location.href);
+    const buttonClear = document.querySelector("[sort-clear]");
+    selectSort.addEventListener("change", ()=>{
+        
+        const valueOption = selectSort.value;
+        const [sortKey, sortValue] = valueOption.split("-");
+        if(valueOption){
+            url.searchParams.set("sortKey", sortKey);
+            url.searchParams.set("sortValue", sortValue);
+        }
+        window.location.href = url.href;
+    });
+    buttonClear.addEventListener("click", ()=>{
+        url.searchParams.delete("sortKey");
+        url.searchParams.delete("sortValue");
+        window.location.href = url.href;
+    });
+
+    const sortKey = url.searchParams.get("sortKey");
+    const sortValue = url.searchParams.get("sortValue");
+    if(sortKey && sortValue){
+        const string = sortKey + "-" + sortValue;
+        const option = selectSort.querySelector(`option[value="${string}"]`);
+        option.selected = true;
+    }
+}

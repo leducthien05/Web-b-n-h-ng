@@ -21,10 +21,19 @@ module.exports.index = async (req, res)=>{
     if(searchProduct.regex){
         find.title = searchProduct.regex;
     }
+
+    //Sắp xếp sản phẩm theo tiêu chí
+    const sort = {}
+    if(req.query.sortKey && req.query.sortValue){
+        sort[req.query.sortKey] = req.query.sortValue;
+    }else{
+        sort.position = "desc";
+    }
+
     //Phân trang, cần dùng await vì bên trong sử dụng async
     const objectPagination = await paginationHelper.pagination(req.query, find);
 
-    const products = await Product.find(find).sort({position: "asc"}).limit(objectPagination.limitItem).skip(objectPagination.indexProduct);
+    const products = await Product.find(find).sort(sort).limit(objectPagination.limitItem).skip(objectPagination.indexProduct);
     res.render("admin/page/products/index", {
         titlePage: "Danh sách sản phẩm",
         products: products,

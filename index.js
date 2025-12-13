@@ -1,3 +1,7 @@
+//Cấu hình env
+require("dotenv").config();
+const port = process.env.PORT;
+
 //Cấu hình file index(đầu dự án)
 const express = require('express');
 const app = express();
@@ -31,10 +35,6 @@ app.use(flash());
 //Cấu hình bodyParser
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
-
-//Cấu hình env
-require("dotenv").config();
-const port = process.env.PORT;
 
 //Cài đặt mongoose
 const database = require("./config/database");

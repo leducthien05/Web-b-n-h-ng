@@ -3,8 +3,6 @@ const router = express.Router();
 const multer = require('multer');
 // const storage = require("../../helper/ImageStorage");
 
-
-
 const upload = multer();
 const validate = require("../../validates/admin/product.validate");
 const uploadImage = require("../../middleware/admin/uploadCloud.middleware");

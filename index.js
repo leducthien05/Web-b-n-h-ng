@@ -5,7 +5,6 @@ const port = process.env.PORT;
 //Cấu hình file index(đầu dự án)
 const express = require('express');
 const app = express();
-const path = require("path");
 
 //Cấu hình method-override
 const methodOverride = require("method-override");
@@ -31,6 +30,9 @@ app.use(session({
 const flash = require('express-flash');
 app.use(flash());
 
+// TinyMCE
+const path = require('path');
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 //Cấu hình bodyParser
 const bodyParser = require('body-parser');

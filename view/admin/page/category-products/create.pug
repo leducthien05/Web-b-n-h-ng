@@ -1,5 +1,6 @@
 extends ../../layout/default.pug
 include ../../mixin/alert.pug
+include ../../mixin/selectTree.pug
 
 block main 
     h1(class="mb-4") Trang tạo mới danh mục
@@ -19,14 +20,13 @@ block main
                 id="title"
                 name="title"   
             )
-        div(class="form-group")
-            label(for="parent_ID") Danh mục cha
-            input(
-                type="text"
-                class="form-control"
-                id="title"
-                name="parent_ID"   
-            )
+        select(
+            name="parent_ID"
+            id="parent_ID"
+            class="form-control"
+        )
+            option(value="") -- Chọn danh mục --
+            +selectTree(record, 1)
         div(class="form-group")
             label(for="desc") Mô tả
             textarea(

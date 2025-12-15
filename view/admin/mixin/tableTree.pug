@@ -1,0 +1,63 @@
+mixin tableTree(record, level = 1)
+    each item in record
+        - const prefix = Array(level + 1).join("-- ")
+        tr 
+            td 
+                input(
+                    type="checkbox"
+                    value = item.id 
+                    checkbox-status
+                    name = "id"
+                )
+            td #{item.index}
+            td 
+                img(
+                    src=item.image 
+                    alt=item.title
+                    height= "auto"
+                    width = "100px"
+                )
+            td #{prefix}#{item.title}
+            td #{item.price}
+            td 
+                input(
+                    type="number"
+                    value = item.position 
+                    style="width: 60px"
+                    min = "1"
+                    name = "position"
+                )
+            td 
+                if(item.status === "active")
+                    a(href="javascript:;"
+                        class="badge badge-success"
+                        change-status
+                        status = item.status
+                        id = item.id
+                    ) Hoạt động
+                else 
+                    a(href="javascript:;" 
+                        class="badge badge-danger"
+                        change-status
+                        status = item.status
+                        id = item.id
+                    ) Dừng hoạt động
+            td 
+                a(
+                    href=`${prefixAdmin}/products-category/edit/${item.id}`
+                    class="btn btn-warning btn-sm"
+                    id = item.id 
+                    button-update
+                ) Sửa
+                a(
+                    href=`${prefixAdmin}/products-category/detail/${item.id}`
+                    class="btn btn-secondary btn-sm"
+                    id = item.id 
+                ) Chi tiết
+                button(
+                    class="btn btn-danger btn-sm ml-1"
+                    id = item.id 
+                    button-delete
+                ) Xóa
+            if(item.children && item.children.length > 0)
+                +tableTree(item.children, level+1)

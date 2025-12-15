@@ -2,6 +2,7 @@ const Category = require("../../model/category-product.model");
 const prefixAdmin = require("../../config/system");
 const filterStatus = require("../../helper/filterStatus.helper");
 const pagination = require("../../helper/pagination.helper");
+const createTree = require("../../helper/createTree.helper");
 
 module.exports.index = async (req, res)=>{
     //Điều kiện hiển thị 
@@ -17,17 +18,45 @@ module.exports.index = async (req, res)=>{
     const objectPagination = await pagination.pagination(req.query, find);
 
     const record = await Category.find(find).limit(objectPagination.limitItem).skip(objectPagination.indexProduct);
+
+    const newRecord = createTree.tree(record);
+    console.log(newRecord);
     res.render("admin/page/category-products/index", {
         titlePage: "Danh mục sản phẩm",
-        record: record,
+        record: newRecord,
         listStatus:listStatus,
         pagination:objectPagination
     });
 }
 
 module.exports.create = async (req, res)=>{
+    let find = {
+        deleted: false
+    }
+    const record = await Category.find(find);
+
+    const createTree = (arr, parent_Id="")=>{
+        //Khai báo mảng chứa
+        const tree = [];
+        //Lặp qua từng phần tử để tìm danh mục con
+        arr.forEach(item => {
+            if(item.parent_ID == parent_Id){
+                const newItem = item
+                //Đệ quy để tìm các danh mục con
+                const children = createTree(arr, item.id);
+                if(children.length > 0){
+                    newItem.children = children;
+                }
+                tree.push(newItem);
+            }
+        });
+        return tree
+    }
+
+    const tree = createTree(record);
     res.render("admin/page/category-products/create", {
-        titlePage: "Thêm mới danh mục"
+        titlePage: "Thêm mới danh mục",
+        record: tree
     });
 }
 
@@ -41,7 +70,7 @@ module.exports.createPost = async (req, res)=>{
         }
         const record = new Category(req.body);
         await record.save();
-        res.redirect(`${prefixAdmin.prefixAdmin}/products`);
+        res.redirect(`${prefixAdmin.prefixAdmin}/products-category`);
     } catch (error) {
         console.log(error);
     }

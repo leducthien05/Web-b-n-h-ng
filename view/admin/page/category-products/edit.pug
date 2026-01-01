@@ -1,0 +1,100 @@
+extends ../../layout/default.pug
+include ../../mixin/alert.pug
+include ../../mixin/selectTree.pug
+
+block main 
+    h1(class="mb-4") Trang chỉnh sửa danh mục
+    +error("5000")
+
+    form(
+        action = `${prefixAdmin}/products-category/edit/${product.id}?_method=PATCH`
+        id="form-create-product-category"
+        method="POST"
+        enctype="multipart/form-data"
+    )
+        div(class="form-group")
+            label(for="name") Tiêu đề
+            input(
+                type="text"
+                class="form-control"
+                id="title"
+                name="title"
+                value=product.title 
+            )
+        select(
+            name="parent_ID"
+            id="parent_ID"
+            class="form-control"
+        )
+            option(value="") -- Chọn danh mục --
+            +selectTree(record, 1, product.parent_ID)
+        div(class="form-group")
+            label(for="desc") Mô tả
+            textarea(
+                class="form-control tinymce"
+                id="desc"
+                name="description"
+                rows = "5"
+                
+            ) #{product.description}
+        
+        div(
+            class="form-group"
+            upload-image
+        )
+            label(for="image") Ảnh
+            input(
+                type="file"
+                class="form-control-file"
+                id="image"
+                name="image"
+                accept="image/*"
+                upload-image-input
+            )
+            img(
+                src = product.image
+                class = "img-preview"
+                upload-image-img
+            )
+        div(class="form-group")
+            label(for="position") Vị trí
+            input(
+                type="number"
+                class="form-control"
+                id="position"
+                name="position"
+                placeholder = "Tự động tăng"
+                min="1"
+                value=product.position
+            )
+        div(class="form-group form-check form-check-inline")
+            input(
+                type="radio"
+                class="form-check-input"
+                id="statusActive"
+                name="status"
+                value="active"
+                checked = (product.status == "active" ? true : false)
+            )
+            label(for="statusActive" class="form-check-label") Hoạt động
+        div(class="form-group form-check form-check-inline")
+            input(
+                type="radio"
+                class="form-check-input"
+                id="statusInActive"
+                name="status"
+                value="inactive"
+                checked = (product.status == "inactive" ? true : false)
+            )
+            label(for="statusInActive" class="form-check-label") Dừng hoạt động
+        div(class="form-group")
+            button(
+                type="submit"
+                class="btn btn-primary"
+            ) Cập nhật
+
+
+
+    script(src="/admin/JS/script.js") 
+
+

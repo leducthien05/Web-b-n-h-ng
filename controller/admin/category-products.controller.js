@@ -20,7 +20,6 @@ module.exports.index = async (req, res)=>{
     const record = await Category.find(find).limit(objectPagination.limitItem).skip(objectPagination.indexProduct);
 
     const newRecord = createTree.tree(record);
-    console.log(newRecord);
     res.render("admin/page/category-products/index", {
         titlePage: "Danh mục sản phẩm",
         record: newRecord,
@@ -75,4 +74,40 @@ module.exports.createPost = async (req, res)=>{
         console.log(error);
     }
     
+}
+
+module.exports.editGet = async (req, res)=>{
+    try {
+        const id = req.params.id;
+        const product = await Category.findOne({
+            deleted: false,
+            _id: id
+        });
+        const record = await Category.find({
+            deleted:false
+        });
+        const newRecord = createTree.tree(record);
+        res.render("admin/page/category-products/edit", {
+            titlePage: "Chỉnh sửa danh mục",
+            product: product,
+            record: newRecord
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports.editPatch = async (req, res)=>{
+    try {
+        const id = req.params.id;
+        req.body.position = parseInt(req.body.position);
+    
+        await Category.updateOne({
+            _id: id
+        }, req.body);
+
+        res.redirect(`${prefixAdmin.prefixAdmin}/products-category`);
+    } catch (error) {
+        console.log(error);
+    }
 }

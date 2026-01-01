@@ -16,6 +16,14 @@ router.post("/create",
     uploadImage.uploadSigleImage,
     validate.create,
     controller.createPost
-)
+);
+
+router.get("/edit/:id", controller.editGet);
+router.patch("/edit/:id",
+    upload.single("image"),
+    uploadImage.uploadSigleImage,
+    validate.edit,
+    controller.editPatch
+);
 
 module.exports = router;

@@ -1,0 +1,41 @@
+extends ../../layout/default.pug
+include ../../mixin/alert.pug
+
+
+block main 
+    h1(class="mb-4") Trang tạo mới nhóm quyền
+    +error("5000")
+
+    form(
+        action = `${prefixAdmin}/roles/edit/${record.id}?_method=PATCH`
+        id="form-create-role"
+        method="POST"
+    )
+        div(class="form-group")
+            label(for="title") Tiêu đề
+            input(
+                type="text"
+                class="form-control"
+                id="title"
+                name="title"  
+                value=record.title 
+            )
+ 
+        div(class="form-group")
+            label(for="desc") Mô tả
+            textarea(
+                class="form-control"
+                id="desc"
+                name="description" 
+            ) #{record.description}
+        div(class="form-group")
+            button(
+                type="submit"
+                class="btn btn-primary"
+            ) Tạo mới
+
+
+
+    script(src="/admin/JS/script.js") 
+
+

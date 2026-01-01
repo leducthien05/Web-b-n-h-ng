@@ -1,9 +1,12 @@
 const Product = require("../../model/product.model");
+const Category = require("../../model/category-product.model");
 
 const prefixAdmin = require("../../config/system");
 const filterStatus = require("../../helper/filterStatus.helper");
 const search = require("../../helper/search.helper");
 const paginationHelper = require("../../helper/pagination.helper");
+const createTree = require("../../helper/createTree.helper");
+
 
 module.exports.index = async (req, res)=>{
     let find = {
@@ -114,8 +117,13 @@ module.exports.delete = async (req, res)=>{
 }
 
 module.exports.create = async (req, res)=>{
+    const record = await Category.find({
+        deleted: false
+    });
+    const newRecord = createTree.tree(record);
     res.render("admin/page/products/create", {
-        titlePage: "Thêm sản phẩm"
+        titlePage: "Thêm sản phẩm",
+        record: newRecord
     })
 }
 
@@ -141,13 +149,19 @@ module.exports.createPost = async (req, res)=>{
 
 module.exports.edit = async (req, res)=>{
     const id = req.params.id;
+    const record = await Category.find({
+        deleted: false
+    });
+    const newRecord = createTree.tree(record);
     const product = await Product.findOne({
         _id: id,
-        deleted: false
+        deleted: false,
+        
     });
     res.render("admin/page/products/edit", {
         titlePage: "Chỉnh sửa sản phẩm",
-        product: product
+        product: product,
+        record:newRecord
     });
 }
 

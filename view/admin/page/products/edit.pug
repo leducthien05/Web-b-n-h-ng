@@ -1,5 +1,7 @@
 extends ../../layout/default.pug
 include ../../mixin/alert.pug
+include ../../mixin/selectTree.pug
+
 
 block main 
     h1(class="mb-4") Trang chỉnh sửa sản phẩm
@@ -20,7 +22,13 @@ block main
                 name="title" 
                 value = product.title  
             )
-        
+        select(
+            name="parent_ID"
+            id="parent_ID"
+            class="form-control"
+        )
+            option(value="") -- Chọn danh mục --
+            +selectTree(record, 1, product.product_category)
         div(class="form-group")
             label(for="desc") Mô tả
             textarea(

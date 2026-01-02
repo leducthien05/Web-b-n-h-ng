@@ -22,8 +22,7 @@ const productSchema = new mongoose.Schema({
     position: Number,
     deleted: {
         type:Boolean,
-        default: false,
-        unique: true
+        default: false
     },
     deletedAt: Date
 }, {

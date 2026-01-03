@@ -4,7 +4,10 @@ const generate = require("../helper/generateRandomString.helper");
 const accountSchema = new mongoose.Schema({
     fullname: String,
     password: String,
-    role_id: String,
+    role_id: {
+        type: String,
+        default: ""
+    },
     description: String,
     token: {
         type: String,
@@ -26,5 +29,5 @@ const accountSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const Role = mongoose.model("Role", roleSchema, "roles");
-module.exports = Role;
+const Account = mongoose.model("Account", accountSchema, "account");
+module.exports = Account;

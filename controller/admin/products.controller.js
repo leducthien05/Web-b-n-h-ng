@@ -116,11 +116,16 @@ module.exports.change_multi = async (req, res)=>{
 
 module.exports.delete = async (req, res)=>{
     const id = req.params.id;
+    req.body.deletedBy = {
+        account_id: res.locals.user._id,
+        deletedAt: Date.now()
+    }
     try {
-        await Product.updateOne({_id: id}, {deleted: true, deletedAt: new Date()}); 
+        await Product.updateOne({_id: id}, {deleted: true, deletedBy: req.body.deletedBy}); 
     } catch (error) {
         console.log(error);
     }
+
 
     req.flash("success", "Xóa thành công sản phẩm vào thùng rác!");
     res.redirect(req.get("referer") || "/");

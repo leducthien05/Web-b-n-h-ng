@@ -6,6 +6,9 @@ const port = process.env.PORT;
 const express = require('express');
 const app = express();
 
+//Cấu hình conver thời gian
+const moment = require("moment");
+
 //Cấu hình method-override
 const methodOverride = require("method-override");
 app.use(methodOverride('_method'));
@@ -49,6 +52,7 @@ app.set("view engine", 'pug');//Khai báo dự án sử dụng template: PUG
 //Biến local
 const systemConfig = require("./config/system");
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.locals.moment = moment;
 
 //Cấu hình file tĩnh
 app.use(express.static(`${__dirname}/public/`));

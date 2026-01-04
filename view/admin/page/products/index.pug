@@ -4,6 +4,7 @@ include ../../mixin/search.pug
 include ../../mixin/pagination.pug
 include ../../mixin/form-change-multi.pug
 include ../../mixin/alert.pug
+include ../../mixin/datetime.pug
 
 
 
@@ -71,6 +72,7 @@ block main
                             th Giá
                             th Vị trí
                             th Trạng thái
+                            th Người tạo
                             th Hành động
                     tbody
                         each item, index in products
@@ -116,6 +118,9 @@ block main
                                                 status = item.status
                                                 id = item.id
                                             ) Dừng hoạt động
+                                td 
+                                    p #{item.user}
+                                    +date(item.createdBy.createAt)
                                 td 
                                     if(role.permission.includes("products_edit"))
                                         a(

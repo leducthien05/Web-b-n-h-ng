@@ -1,5 +1,6 @@
 const Product = require("../../model/product.model");
 const Category = require("../../model/category-product.model");
+const Account = require("../../model/account.model");
 
 const prefixAdmin = require("../../config/system");
 const filterStatus = require("../../helper/filterStatus.helper");
@@ -37,6 +38,15 @@ module.exports.index = async (req, res)=>{
     const objectPagination = await paginationHelper.pagination(req.query, find);
 
     const products = await Product.find(find).sort(sort).limit(objectPagination.limitItem).skip(objectPagination.indexProduct);
+
+    for (const item of products) {
+        const user = await Account.findOne({
+            _id: item.createdBy.account_id
+        });
+        if(user){
+            item.user = user.fullname
+        }
+    }
     res.render("admin/page/products/index", {
         titlePage: "Danh sách sản phẩm",
         products: products,
@@ -139,6 +149,10 @@ module.exports.createPost = async (req, res)=>{
     }else{
         req.body.position = parseInt(req.body.position);
     }
+    req.body.createdBy = {
+        account_id: res.locals.user._id,
+        createAt: Date.now()
+    }
 
     const newProduct = new Product(req.body);
     await newProduct.save();
@@ -180,7 +194,6 @@ module.exports.editPatch = async (req, res)=>{
     if(req.body.image){
         req.body.image = `${prefixAdmin.prefixAdmin}/upload/${req.file.filename}`;
     }
-
     try {
         await Product.updateOne({
             _id: id

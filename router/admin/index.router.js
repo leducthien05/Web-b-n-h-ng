@@ -1,4 +1,5 @@
 const systemConfig = require("../../config/system");
+const middlewareAuth = require("../../middleware/admin/auth.middleware");
 
 const dashboardRouter = require("./dashboard.router");
 const productsRouter = require("./products.router");
@@ -9,11 +10,11 @@ const authRouter = require("./auth.router");
 
 module.exports = (app)=>{
     const PATH_ADMIN = systemConfig.prefixAdmin;
-    app.use(PATH_ADMIN + "/dashboard", dashboardRouter);
-    app.use(PATH_ADMIN + "/products", productsRouter);
-    app.use(PATH_ADMIN + "/products-category", categoryProductRouter);
-    app.use(PATH_ADMIN + "/roles", roleRouter);
-    app.use(PATH_ADMIN + "/accounts", accountRouter);
+    app.use(PATH_ADMIN + "/dashboard", middlewareAuth.requireAuth, dashboardRouter);
+    app.use(PATH_ADMIN + "/products", middlewareAuth.requireAuth, productsRouter);
+    app.use(PATH_ADMIN + "/products-category", middlewareAuth.requireAuth, categoryProductRouter);
+    app.use(PATH_ADMIN + "/roles", middlewareAuth.requireAuth,roleRouter);
+    app.use(PATH_ADMIN + "/accounts", middlewareAuth.requireAuth,accountRouter);
     app.use(PATH_ADMIN + "/auth", authRouter);
 
 

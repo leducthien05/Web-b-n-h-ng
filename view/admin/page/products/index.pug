@@ -73,6 +73,7 @@ block main
                             th Vị trí
                             th Trạng thái
                             th Người tạo
+                            th Người sửa
                             th Hành động
                     tbody
                         each item, index in products
@@ -121,6 +122,12 @@ block main
                                 td 
                                     p #{item.user}
                                     +date(item.createdBy.createAt)
+                                td 
+                                    - const updatedBy = item.updatedBy[item.updatedBy.length -1]
+                                    -if(updatedBy)
+                                        p #{updatedBy.userEdit}
+                                        
+                                        +date(updatedBy.updatedAt)
                                 td 
                                     if(role.permission.includes("products_edit"))
                                         a(

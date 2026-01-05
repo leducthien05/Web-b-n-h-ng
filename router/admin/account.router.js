@@ -25,6 +25,7 @@ router.patch("/edit/:id",
     uploadCloud.uploadSigleImage,
     validate.edit,
     controller.editPatch
-)
+);
+
 
 module.exports = router;

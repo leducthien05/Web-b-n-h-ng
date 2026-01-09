@@ -1,3 +1,5 @@
+include ../mixin/sub-menu.pug
+
 header.header 
     .container
         .row(class="align-items-center")
@@ -18,7 +20,9 @@ header.header
                                 class="nav-link text-primary"
                             ) Trang chủ
                         li(class= "sub-menu" )
+                            -const path = "/product"
                             a(
                                 href="/product"
                                 class="nav-link text-primary"
                             ) Sản phẩm
+                                +submenu(category, path)

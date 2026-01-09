@@ -1,18 +1,18 @@
 const Product = require("../../model/product.model");
+const Category= require("../../model/category-product.model");
 
 const newPriceArray = require("../../helper/newPrice.helper");
+const createTree = require("../../helper/createTree.helper");
 
 module.exports.product = async (req, res)=>{
     const find = {
         deleted: false,
         status: "active"
     };
-
     const products = await Product.find(find);
     
     //Tính giá mới
     const newProducts = newPriceArray.newPriceArray(products);
-
     res.render("client/page/products/index", {
         product: newProducts,
         titlePage: "Danh sách sản phẩm"

@@ -1,9 +1,8 @@
 extends ../../layout/default.pug
 include ../../mixin/product-layout.pug
+include ../../mixin/box-head.pug
 
 block main
     .container.my-3
-        .row
-            .col-12
-                //- +box-head("Danh sách sản phẩm")
+        +box-head(titlePage)
         +product-layout(product)

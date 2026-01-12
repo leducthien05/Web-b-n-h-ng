@@ -11,8 +11,15 @@ module.exports.homepage = async (req, res)=>{
     });
     const newProduct = newPriceHelper.newPriceArray(productFeatured);
 
+    //Sản phẩm mới nhất
+    const productNew = await Product.find({
+        deleted:false,
+        status: "active"
+    }).sort({position: "desc"}).limit(6);
+
     res.render("client/page/home/index", {
         titlePage: "Trang chủ",
-        productFeatured: newProduct
+        productFeatured: newProduct,
+        productNew: productNew
     });
 }

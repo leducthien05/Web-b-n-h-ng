@@ -23,19 +23,37 @@ module.exports.product = async (req, res)=>{
 module.exports.detail = async (req, res)=>{
     try {
         const product = await Product.findOne({
-            slug: req.params.slug,
+            slug: req.params.slugProduct,
             status: "active",
-            deleted:false
+            deleted: false
         });
-        console.log(product);
-        console.log(req.params.slug);
+
+        if (!product) {
+            return res.redirect("/");
+        }
+
+        // Tính giá sau giảm
+        product.newPrice = product.price * (1 - product.discountPercentage / 100);
+
+        // Lấy category
+        const category = await Category.findOne({
+            deleted: false,
+            status: "active",
+            _id: product.product_category
+        });
+       
+
         res.render("client/page/products/detail", {
             titlePage: product.title,
-            product:product
+            product: product,
+            recordCategory: category
         });
+
     } catch (error) {
-        
+        console.log(error);
+        res.redirect(req.get("referer") || "/");
     }
+
 }
 
 module.exports.category = async (req, res)=>{

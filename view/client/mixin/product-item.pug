@@ -1,0 +1,15 @@
+mixin product-item(item)
+    .col-md-4.col-sm-6.mb-3
+        .product-card
+            .product-image
+                img(src=item.image, alt=item.title)
+                if(item.featured == "1")
+                    .featured-badge Nổi bật
+                .discount-badge -#{item.discountPercentage}%
+
+            .product-body
+                h3.product-name= item.title
+                .price-box
+                    span.price-new #{item.newPrice}$
+                    span.price-old #{item.price}$
+                a.product-btn(href=`/products/${item.slug}`) Xem chi tiết

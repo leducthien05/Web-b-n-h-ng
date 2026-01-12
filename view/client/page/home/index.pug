@@ -1,4 +1,8 @@
 extends ../../layout/default
+include ../../mixin/product-layout.pug
 
-block main 
-    
+block main
+    .section-products.my-4
+        .container
+            h3.section-title Danh sách sản phẩm
+            +product-layout(productFeatured)

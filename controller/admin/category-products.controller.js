@@ -20,6 +20,11 @@ module.exports.index = async (req, res)=>{
     const record = await Category.find(find).limit(objectPagination.limitItem).skip(objectPagination.indexProduct);
 
     const newRecord = createTree.tree(record);
+    const childent = await Category.find({
+        parent_ID: "693eb42fe2bcb13ff433ace2"
+    });
+    console.log(childent);
+
     res.render("admin/page/category-products/index", {
         titlePage: "Danh mục sản phẩm",
         record: newRecord,

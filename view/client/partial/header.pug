@@ -3,7 +3,7 @@ include ../mixin/sub-menu.pug
 header.header 
     .container
         .row(class="align-items-center")
-            .col-md-2
+            .col-2
                 .inter-logo
                     a(href="/")
                         img(
@@ -11,7 +11,24 @@ header.header
                             alt="Logo"
                             style="height: 50px"
                         )
-            .col-9
+            .col-5
+                form(
+                    action="/search"
+                    method="GET"
+                )
+                    div(class="form-group d-flex mb-0")
+                        input(
+                            type="text"
+                            placeholder="Nhập từ khóa..."
+                            class="form-control"
+                            name="keyword"
+                        )
+                        button(
+                            type="submit"
+                            class="btn btn-primary"
+                        ) Tìm
+
+            .col-4 
                 .inner-menu
                     ul(class="nav justify-content-end")
                         li(class="nav-item")
@@ -26,3 +43,9 @@ header.header
                                 class="nav-link text-primary"
                             ) Sản phẩm
                                 +submenu(category, path)
+                        li(class="nav-item")
+                            a(
+                                href="/cart" 
+                                class="nav-link text-primary"
+                            ) Giỏ hàng
+                            

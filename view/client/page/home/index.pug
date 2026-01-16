@@ -1,10 +1,12 @@
 extends ../../layout/default
 include ../../mixin/product-layout.pug
+include ../../mixin/box-head.pug
+
 
 block main
     .section-products.my-4
         .container
-            h3.section-title Danh sách sản phẩm
+            +box-head(titlePage)
             +product-layout(productFeatured)
     .section-latest-products.my-4
         .container

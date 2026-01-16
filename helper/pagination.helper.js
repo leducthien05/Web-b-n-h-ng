@@ -2,7 +2,7 @@ const Product = require("../model/product.model");
 
 module.exports.pagination = async (query, find)=>{
     const objectPagination = {
-        limitItem: 4,
+        limitItem: 10,
         currentPage: 1
     };
     const total = await Product.countDocuments(find);

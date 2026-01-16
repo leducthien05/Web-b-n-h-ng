@@ -50,7 +50,6 @@ module.exports.detail = async (req, res)=>{
         });
 
     } catch (error) {
-        console.log(error);
         res.redirect(req.get("referer") || "/");
     }
 

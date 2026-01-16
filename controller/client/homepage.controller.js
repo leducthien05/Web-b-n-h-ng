@@ -1,6 +1,7 @@
 const Product = require("../../model/product.model");
 const Category = require("../../model/category-product.model");
 
+
 const newPriceHelper = require("../../helper/newPrice.helper");
 
 module.exports.homepage = async (req, res)=>{
@@ -23,3 +24,4 @@ module.exports.homepage = async (req, res)=>{
         productNew: productNew
     });
 }
+

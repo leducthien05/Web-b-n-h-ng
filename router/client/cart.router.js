@@ -5,6 +5,6 @@ const controller = require("../../controller/client/cart.controller");
 
 router.get('/', controller.cart);
 
-router.get("/add/:id", controller.create);
+router.post("/add/:id", controller.addPost);
 
 module.exports = router;

@@ -4,9 +4,11 @@ const Search = require("../../router/client/search.router");
 const Cart = require("../client/cart.router");
 
 const categoryMiddleware = require("../../middleware/client/category.middleware");
+const cartMiddleware = require("../../middleware/client/cart.middleware");
 
 module.exports = (app) =>{
-    app.use(categoryMiddleware.category)
+    app.use(categoryMiddleware.category);
+    app.use(cartMiddleware.cartID);
     app.use("/", HomePage);
     app.use("/cart", Cart);
     app.use("/product", Product);

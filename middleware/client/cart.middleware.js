@@ -7,6 +7,8 @@ module.exports.cartID = async (req, res, next)=>{
             deleted: false
         });
         if(cart){
+            const totalProduct = cart.products.reduce((sum, item)=>{ return sum + item.quantity}, 0);
+            cart.totalProduct = totalProduct;
             res.locals.cart = cart;
 
         }

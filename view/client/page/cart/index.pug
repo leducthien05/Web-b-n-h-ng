@@ -1,0 +1,63 @@
+extends ../../layout/default.pug
+include ../../mixin/product-layout.pug
+include ../../mixin/box-head.pug
+include ../../mixin/alert.pug
+
+block main
+    +error(5000)
+
+    .container.my-3
+        .row
+            .col-12
+            +box-head("Giỏ hàng")
+
+        .row
+            .col-12
+            table(class="table table-bordered")
+                thead
+                tr
+                    th STT
+                    th Ảnh
+                    th Tên
+                    th Giá
+                    th Số lượng
+                    th Tổng tiền 
+                    th Hành động
+                tbody 
+                    if(cart.products.length > 0)
+                        each item, index in cart.products
+                            tr 
+                                td #{index + 1} 
+                                td 
+                                    img(
+                                        src = item.product.image 
+                                        alt=item.title
+                                        hight= "auto"
+                                        width = "100px"
+                                    )
+                                td 
+                                    a(
+                                        href=`/product/detail/${item.product.slug}`
+                                    ) #{item.product.title} 
+                                td #{item.product.newPrice}
+                                td 
+                                    input(
+                                        type="number"
+                                        min = 0
+                                        max = item.product.stock
+                                        value = item.quantity
+                                    ) 
+                                td #{item.product.sumPrice}
+                                td
+                                    a(
+                                        href=`/cart/delete/${item.product_id}`
+                                        class="btn btn-danger"
+                                    ) Xóa
+                    else
+                        p Không có sản phẩm nào trong giỏ hàng.
+
+            h3(class="text-right") Tổng đơn hàng: #{cart.totalPrice}$
+
+            div(class="text-right mt-3")
+                a(href="/checkout" class="btn btn-success") THANH TOÁN
+

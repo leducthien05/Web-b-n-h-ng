@@ -1,11 +1,34 @@
 const Product = require("../../model/product.model");
 const Category = require("../../model/category-product.model");
-const searchHelper = require("../../helper/search.helper");
 const Cart = require("../../model/cart.model");
 
+const searchHelper = require("../../helper/search.helper");
+const priceHelper = require("../../helper/newPrice.helper");
 
 module.exports.cart = async (req, res) => {
-    res.send("OK");
+    const cartID = req.cookies.cartID;
+    const cart = await Cart.findOne({
+        _id: cartID,
+    });
+    if(cart.products.length > 0){
+        for (const item of cart.products) {
+            const id = item.product_id;
+            const record = await Product.findOne({
+                _id: id,
+                status: "active",
+                deleted: false
+            }).select("title image price slug discountPercentage stock");
+            const newRecord = priceHelper.newPrice(record);
+            item.product = newRecord;
+            const sumPrice = item.quantity * item.product.newPrice;
+            item.product.sumPrice = sumPrice;
+        }
+    }
+    cart.totalPrice = cart.products.reduce((sum, item) => {return sum + item.product.sumPrice}, 0);
+    res.render("client/page/cart/index", {
+        titlePage: "Giỏ hàng",
+        cart: cart
+    });
 }
 
 module.exports.addPost = async (req, res) => {

@@ -43,9 +43,12 @@ block main
                                 td 
                                     input(
                                         type="number"
-                                        min = 0
+                                        min = 1
+                                        quantity
                                         max = item.product.stock
+                                        name="quantity"
                                         value = item.quantity
+                                        item_id = item.product_id
                                     ) 
                                 td #{item.product.sumPrice}
                                 td
@@ -60,4 +63,5 @@ block main
 
             div(class="text-right mt-3")
                 a(href="/checkout" class="btn btn-success") THANH TOÁN
+    script(src="client/JS/script.js") 
 

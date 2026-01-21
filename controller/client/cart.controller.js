@@ -95,3 +95,37 @@ module.exports.delete = async (req, res) => {
 
 }
 
+module.exports.editQuantity = async (req, res)=>{
+    try {
+        const idProduct = req.params.idProduct;
+        const newQuantity = parseInt(req.params.newQuantity);
+        const cartID = req.cookies.cartID;
+    
+        //Theo Mongoose
+        // await Cart.updateOne({
+        //     _id: cartID,
+        //     "products.product_id": idProduct
+        // }, {
+        //     $set: {
+        //         "products.$.quantity": newQuantity
+        //     }
+        // });
+        
+        //Theo JS
+        const cart = await Cart.findOne({
+            _id: cartID
+        });
+        for (const item of cart.products) {
+            if(item.product_id == idProduct){
+                item.quantity = newQuantity;
+                break;
+            }
+        }
+        await cart.save();
+        res.redirect(req.get("referer") || "/");
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+

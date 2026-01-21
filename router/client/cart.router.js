@@ -9,4 +9,6 @@ router.post("/add/:id", controller.addPost);
 
 router.get("/delete/:Productid", controller.delete);
 
+router.get("/edit/quantity/:idProduct/:newQuantity", controller.editQuantity);
+
 module.exports = router;

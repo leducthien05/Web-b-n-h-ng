@@ -66,3 +66,9 @@ module.exports.order = async (req, res)=>{
     })
     res.redirect(`/checkout/success/${order._id}`);
 }
+
+module.exports.checkoutSuccess = async (req, res)=>{
+    res.render("client/page/checkout/success", {
+        title: "Đặt hàng thành công",
+    })
+}

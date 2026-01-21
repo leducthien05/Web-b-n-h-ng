@@ -83,3 +83,15 @@ module.exports.addPost = async (req, res) => {
     }
 }
 
+module.exports.delete = async (req, res) => {
+    const CartID =  req.cookies.cartID;
+    const productID = req.params.Productid;
+    await Cart.updateOne({
+        _id: CartID
+    }, { $pull: {
+        products: { product_id: productID}
+    }});
+        res.redirect(req.get("referer") || "/");
+
+}
+

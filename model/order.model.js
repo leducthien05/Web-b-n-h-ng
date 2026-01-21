@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { product } = require("../controller/client/product.controller");
 
 const orderSchema = new mongoose.Schema({
     // user_ID: String,
@@ -31,5 +30,5 @@ const orderSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const Role = mongoose.model("Role", roleSchema, "roles");
-module.exports = Role;
+const Order = mongoose.model("Order", orderSchema, "orders");
+module.exports = Order;

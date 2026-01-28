@@ -2,29 +2,19 @@ extends ../../layout/default.pug
 include ../../mixin/product-item.pug
 include ../../mixin/box-head.pug
 include ../../mixin/alert.pug
-
 block main
     +error("5000")
     .container.my-5 
         .row.justify.content.center
             .col-8
-                h1(class="text-center") Đăng ký tài khoản
+                h1(class="text-center") Đăng nhập
 
         
                 form(
                     method="POST" 
-                    action="/user/register"
+                    action="/user/login"
                 )
-                    div(class = "form-group")
-                        label(for="username") Họ và tên
-                        input(
-                            class="form-control"
-                            type="text"
-                            name="username"
-                            id="username"
-                            placeholder="Nhập họ và tên"
-                            
-                        )
+                    
                     div(class = "form-group")
                         label(for="email") Email
                         input(
@@ -49,4 +39,4 @@ block main
                             required
                         )
 
-                    button(type="submit" class="btn-auth") Đăng ký
+                    button(type="submit" class="btn-auth") Đăng nhập

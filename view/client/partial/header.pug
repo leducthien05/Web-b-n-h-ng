@@ -11,7 +11,7 @@ header.header
                             alt="Logo"
                             style="height: 50px"
                         )
-            .col-5
+            .col-4
                 form(
                     action="/search"
                     method="GET"
@@ -28,7 +28,7 @@ header.header
                             class="btn btn-primary"
                         ) Tìm
 
-            .col-5
+            .col-6
                 .inner-menu
                     ul(class="nav justify-content-end")
                         li(class="nav-item")
@@ -48,9 +48,21 @@ header.header
                                 href="/cart" 
                                 class="nav-link text-primary"
                             ) Giỏ hàng (#{cart ? cart.totalProduct : 0})
-                        li(class="nav-item")
+                        if(user)
+                            li(class="nav-item")
                             a(
-                                href="/user/register" 
+                                href="/user/logout" 
                                 class="nav-link text-primary"
-                            ) Đăng ký
+                            ) Đăng xuất
+                        else
+                            li(class="nav-item")
+                                a(
+                                    href="/user/register" 
+                                    class="nav-link text-primary"
+                                ) Đăng ký
+                            li(class="nav-item")
+                                a(
+                                    href="/user/login" 
+                                    class="nav-link text-primary"
+                                ) Đăng nhập
                             

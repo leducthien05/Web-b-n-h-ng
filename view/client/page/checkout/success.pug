@@ -2,17 +2,50 @@ extends ../../layout/default.pug
 include ../../mixin/box-head.pug
 
 block main
-    .container.my-3
-        .row
-            .col-12
-            +box-head(titlePage)
-        .row.justify-content-center
-            .col-md-8.text-center
-                .card.p-5.shadow
-                    h2.text-success.mb-3 ✔ Đặt hàng thành công
-                    p.mb-4
-                        | Cảm ơn bạn đã đặt hàng. Đơn hàng của bạn đang được xử lý
-                        | và sẽ được giao trong thời gian sớm nhất.
+    .container
+        h1.title Đặt hàng thành công
 
-                    a.btn.btn-primary.mr-2(href="/") Tiếp tục mua hàng
-                    a.btn.btn-outline-secondary(href="/cart") Xem giỏ hàng
+        .alert-success
+            | #{message}
+
+        // ===== Thông tin cá nhân =====
+        h2 Thông tin cá nhân
+        table.info-table
+            tr
+                td Họ tên
+            td
+                strong= order.userInfo.fullName
+            tr
+                td Số điện thoại
+            td
+                strong= order.userInfo.phone
+            tr
+                td Địa chỉ
+            td
+                strong= order.userInfo.address
+
+        // ===== Thông tin đơn hàng =====
+        h2 Thông tin đơn hàng
+        table.order-table
+            thead
+            tr
+                th STT
+                th Ảnh
+                th Tên
+                th Giá
+                th Số lượng
+                th Tổng tiền
+            tbody
+                each item, index in order.product
+                    tr
+                    td= index + 1
+                    td
+                        img(src=item.productInfo.image, alt=item.productInfo.title)
+                    td= item.productInfo.title
+                    td= item.price
+                    td= item.quantity
+                    td= item.sumPrice
+
+        h3.total
+            | Tổng đơn hàng:
+            span= order.totalPrice

@@ -429,3 +429,68 @@
 .btn-buy:hover {
     opacity: .9;
 }
+
+/* Success page */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f5f5;
+}
+
+/* .container {
+    width: 900px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 6px;
+} */
+
+.title {
+    color: #2e7d32;
+    margin-bottom: 15px;
+}
+
+.alert-success {
+    background: #dff0d8;
+    color: #2e7d32;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-top: 25px;
+}
+
+.info-table,
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.info-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.order-table th,
+.order-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.order-table img {
+    width: 60px;
+}
+
+.total {
+    text-align: right;
+    margin-top: 20px;
+    font-size: 22px;
+}
+
+.total span {
+    color: #d32f2f;
+    font-weight: bold;
+}

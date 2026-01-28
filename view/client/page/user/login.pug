@@ -2,6 +2,7 @@ extends ../../layout/default.pug
 include ../../mixin/product-item.pug
 include ../../mixin/box-head.pug
 include ../../mixin/alert.pug
+
 block main
     +error("5000")
     .container.my-5 
@@ -40,4 +41,4 @@ block main
                         )
 
                     button(type="submit" class="btn-auth") Đăng nhập
-                a(href="") Quên mật khẩu
+                a(href="/user/password/forgot") Quên mật khẩu

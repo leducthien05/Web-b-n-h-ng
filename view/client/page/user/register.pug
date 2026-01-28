@@ -1,0 +1,50 @@
+extends ../../layout/default.pug
+include ../../mixin/product-item.pug
+include ../../mixin/box-head.pug
+
+block main
+    .container.my-5 
+        .row.justify.content.center
+            .col-8
+                h1(class="text-center") Đăng ký tài khoản
+
+        
+                form(
+                    method="POST" 
+                    action="/user/register"
+                )
+                    div(class = "form-group")
+                        label(for="username") Họ và tên
+                        input(
+                            class="form-control"
+                            type="text"
+                            name="username"
+                            id="username"
+                            placeholder="Nhập họ và tên"
+                            
+                        )
+                    div(class = "form-group")
+                        label(for="email") Email
+                        input(
+                            type="email"
+                            class="form-control"
+
+                            name="email"
+                            id="email"
+                            placeholder="Nhập email"
+                            
+                        )
+
+                    div(class = "form-group")
+                        label(for="password") Mật khẩu
+                        input(
+                            type="password"
+                            class="form-control"
+
+                            name="password"
+                            id="password"
+                            placeholder="Nhập mật khẩu"
+                            required
+                        )
+
+                    button(type="submit" class="btn-auth") Đăng nhập

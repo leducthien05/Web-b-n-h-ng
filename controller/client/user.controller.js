@@ -1,5 +1,6 @@
 const User = require("../../model/user.model");
 const Forgot = require("../../model/forgot-password.model");
+const Cart = require("../../model/cart.model");
 
 const md5 = require("md5");
 const genereateHelper = require("../../helper/generateRandomString.helper");
@@ -59,6 +60,16 @@ module.exports.loginPost = async (req, res)=>{
         req.flash("error", "Tài khoản đã bị khóa");
         res.redirect(req.get("referer") || "/");
         return;
+    }
+    const cart = await Cart.findOne({
+        user_id: user._id
+    });
+    if(!cart){
+        await Cart.updateOne({
+            _id: req.cookies.cartID
+        }, {user_id: user._id});
+    }else{
+        res.cookie("cartID", cart._id);
     }
 
     res.cookie("tokenUser", user.tokenUser);

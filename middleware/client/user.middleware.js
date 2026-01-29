@@ -10,13 +10,7 @@ module.exports.infoUser = async (req, res, next)=>{
 
         if(user){
             res.locals.user = user;
-            const cart = await Cart.findOne({
-                user_id: user._id,
-                deleted: false
-            });
-            if(cart){
-                res.cookie("cartID", cart._id);
-            }
+            
         }
         
     }

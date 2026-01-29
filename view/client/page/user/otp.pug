@@ -8,10 +8,12 @@ block main
     .container.my-5 
         .row.justify.content.center
             .col-8
-                h1(class="text-center") Đăng nhập
+                h1(class="text-center") Nhập mã OTP
+
+        
                 form(
                     method="POST" 
-                    action="/user/login"
+                    action="/user/password/otp"
                 )
                     
                     div(class = "form-group")
@@ -19,7 +21,8 @@ block main
                         input(
                             type="email"
                             class="form-control"
-
+                            value=email 
+                            readonly
                             name="email"
                             id="email"
                             placeholder="Nhập email"
@@ -27,19 +30,33 @@ block main
                         )
 
                     div(class = "form-group")
-                        label(for="password") Mật khẩu
+                        label(for="otp") Mã OTP
                         input(
-                            type="password"
+                            type="text"
                             class="form-control"
 
-                            name="password"
-                            id="password"
-                            placeholder="Nhập mật khẩu"
+                            name="otp"
+                            id="otp"
+                            placeholder="Nhập mã OTP"
                             required
                         )
 
                     div(class = "form-group")
                         button(type="submit" 
                             class="btn btn-primary btn-block"
-                        ) Đăng nhập
-                a(href="/user/password/forgot") Quên mật khẩu
+                        ) Xác nhận
+                form(
+                    method="POST"
+                    action="/user/password/forgot"
+                )
+                    input(
+                        type="hidden"
+                        class="form-control"
+                        value=email 
+                        name="email"
+                        )
+                    div(class = "form-group")
+                        button(type="submit" 
+                            class="btn btn-primary btn-block"
+                        ) Gửi lại mã OTP
+                

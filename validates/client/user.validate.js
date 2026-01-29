@@ -46,3 +46,15 @@ module.exports.forgotPassword = (req, res, next)=>{
     next();
 }
 
+module.exports.resetPassword = (req, res, next)=>{
+    
+    if(req.body.password != req.body.repassword){
+        req.flash("error", `Mật khẩu không khớp!`);
+        res.redirect(req.get("referer") || "/");
+        return;
+    }
+    
+    console.log("OK");
+    next();
+}
+

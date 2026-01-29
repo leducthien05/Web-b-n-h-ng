@@ -1,5 +1,5 @@
 mixin success(time)
-    -if (messages.success)
+    if (messages.success)
         .message.info
             div(
                 class = "alert alert-success"
@@ -8,7 +8,7 @@ mixin success(time)
             ) #{messages.success} <span class = "close-alert">X</span>
 
 mixin error(time)
-    -if (messages.error)
+    if (messages.error)
         .message.info
             div(
                 class = "alert alert-danger"

@@ -50,19 +50,12 @@ header.header
                             ) Giỏ hàng (#{cart ? cart.totalProduct : 0})
                         if(user)
                             li(class="nav-item")
-                            a(
-                                href="/user/logout" 
-                                class="nav-link text-primary"
-                            ) Đăng xuất
+                                a(href="/user/info") #{user.username}
+                            li(class="nav-item")
+                                a(href="/user/logout") Đăng xuất
                         else
                             li(class="nav-item")
-                                a(
-                                    href="/user/register" 
-                                    class="nav-link text-primary"
-                                ) Đăng ký
+                                a(href="/user/register") Đăng ký
                             li(class="nav-item")
-                                a(
-                                    href="/user/login" 
-                                    class="nav-link text-primary"
-                                ) Đăng nhập
+                                a( href="/user/login"  ) Đăng nhập
                             

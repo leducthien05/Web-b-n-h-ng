@@ -60,10 +60,16 @@ app.use(express.static(`${__dirname}/public/`));
 //Cấu hình Router 
 const router = require("./router/admin/index.router");
 const routerClient = require("./router/client/index.router");
+const { title } = require("process");
 
 //Gọi hàm sử dụng router
 routerClient(app);
 router(app);
+app.use((req, res) => {
+    res.status(404).render("client/page/error/404", {
+        titlePage: "404"
+    });
+});
 
 app.listen(port, () => {
   console.log(`🚀 Server chạy ở http://localhost:${port}`);

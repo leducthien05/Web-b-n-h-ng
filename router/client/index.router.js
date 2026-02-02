@@ -4,6 +4,7 @@ const Search = require("../../router/client/search.router");
 const Cart = require("../client/cart.router");
 const Checkout = require("../client/checkout.router");
 const User = require("../client/user.router");
+const Chat = require("../client/chat.router");
 
 const categoryMiddleware = require("../../middleware/client/category.middleware");
 const cartMiddleware = require("../../middleware/client/cart.middleware");
@@ -21,5 +22,6 @@ module.exports = (app) =>{
     app.use("/search", Search);
     app.use("/checkout", Checkout);
     app.use("/user", User);
+    app.use("/chat", Chat);
 };
 

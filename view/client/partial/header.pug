@@ -11,7 +11,7 @@ header.header
                             alt="Logo"
                             style="height: 50px"
                         )
-            .col-4
+            .col-3
                 form(
                     action="/search"
                     method="GET"
@@ -28,7 +28,7 @@ header.header
                             class="btn btn-primary"
                         ) Tìm
 
-            .col-7
+            .col-8
                 .inner-menu
                     ul(class="nav justify-content-end")
                         li(class="nav-item")
@@ -53,6 +53,8 @@ header.header
                                 a(href="/user/info") #{user.username}
                             li(class="nav-item")
                                 a(href="/user/logout") Đăng xuất
+                            li(class="nav-item")
+                                a(href="/chat") Chat
                         else
                             li(class="nav-item")
                                 a(href="/user/register") Đăng ký

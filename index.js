@@ -6,6 +6,15 @@ const port = process.env.PORT;
 const express = require('express');
 const app = express();
 
+//SoketIO khai báo
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+io.on('connection', (socket) => {
+  console.log('a user connected');
+});
+
 //Cấu hình conver thời gian
 const moment = require("moment");
 
@@ -60,7 +69,6 @@ app.use(express.static(`${__dirname}/public/`));
 //Cấu hình Router 
 const router = require("./router/admin/index.router");
 const routerClient = require("./router/client/index.router");
-const { title } = require("process");
 
 //Gọi hàm sử dụng router
 routerClient(app);
@@ -71,6 +79,6 @@ app.use((req, res) => {
     });
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`🚀 Server chạy ở http://localhost:${port}`);
 });

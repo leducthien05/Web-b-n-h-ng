@@ -27,13 +27,10 @@ html(lang="vi")
         include ../partial/footer.pug
 
         //- Nhúng file Bootstrap
-        script(
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        )
-
-        script(
-            src="/JS/script.js"
-        )
+        script( src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js")
+        script(src="/client/JS/script.js")
+        script(src="/socket.io/socket.io.js")
+        script(src="/client/JS/socket.js")
 
   
     

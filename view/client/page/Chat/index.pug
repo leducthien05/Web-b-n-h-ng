@@ -4,7 +4,7 @@ block main
     .container.my-3
         .row
             .col-12
-                .chat
+                .chat(my-id=user._id)
                     .inner-body
                         each chat in chats
                             div(class = (chat.user_id == user._id ? "inner-outgoing" : "inner-incoming"))

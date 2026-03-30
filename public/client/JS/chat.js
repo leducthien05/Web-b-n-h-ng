@@ -55,4 +55,15 @@ if(picker){
         const icon = event.detail.unicode;
         input.value = input.value + icon;
     });
+    //typing
+    input.addEventListener("keyup", ()=>{
+        if(input.value.trim() !== ""){
+            socket.emit("CLIENT_SEND_TYPING", "shown");
+        } 
+    });
 }
+
+//SERVER_RETURN_TYPING
+socket.on("SERVER_RETURN_TYPING", mess =>{
+    console.log(mess);
+})

@@ -11,6 +11,11 @@ block main
                                 if(chat.user_id != user._id)
                                     .inner-name #{chat.name}   
                                 .inner-content #{chat.content}
+                        .inner-typing
+                            .typing-bubble
+                                span
+                                span
+                                span
                     .inner-foot
                         form(
                             class = "inner-form"

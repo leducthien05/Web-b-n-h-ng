@@ -20,12 +20,12 @@ module.exports.chat = async (req, res)=>{
         });
         
         socket.on("CLIENT_SEND_TYPING", (content)=>{
-            console.log(content)
             socket.broadcast.emit("SERVER_RETURN_TYPING", {
                 userID: user_id,
                 userName: userName,
                 type: content
             });
+            
         });
     });
     const chat = await Chat.find({

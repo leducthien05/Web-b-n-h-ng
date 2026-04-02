@@ -30,6 +30,7 @@ router.get("/edit/:id", controller.edit);
 
 router.patch("/edit/:id",
     upload.single("image"),
+    uploadImage.uploadSigleImage,
     validate.edit,
     controller.editPatch
 );

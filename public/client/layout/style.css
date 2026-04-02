@@ -508,7 +508,7 @@ h2 {
     background: #fff;
     border-radius: 10px;
     border: 1px solid #eee;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 /* BODY CHAT */
@@ -542,7 +542,8 @@ h2 {
 /* ===== TIN NHẮN ĐI (BÊN PHẢI) ===== */
 .chat .inner-outgoing {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;   /* xếp text + ảnh theo chiều dọc */
+    align-items: flex-end;    /* đẩy toàn bộ sang bên phải */
     margin-bottom: 12px;
 }
 
@@ -637,4 +638,152 @@ h2 {
         transform: translateY(-6px);
         opacity: 1;
     }
+}
+
+.chat .custom-file-container .image-preview {
+    height: 0;
+    min-height: 0;
+    padding: 0;
+}
+
+/* Fix FilePond layout */
+.filepond--root {
+    width: 30%;
+    margin-top: 5px;
+}
+
+/* tránh đè nút */
+.chat .inner-form {
+    align-items: flex-start;
+}
+
+/* nút gửi không bị đè */
+.chat .inner-form button {
+    flex-shrink: 0;
+}
+
+/* icon emoji */
+[button-icon] {
+    flex-shrink: 0;
+}
+
+/* upload image */
+.filepond--root {
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+.filepond--panel-root {
+    background-color: #f8f9fa;
+    border: 2px dashed #4CAF50;
+    border-radius: 12px;
+}
+
+.filepond--drop-label {
+    color: #333;
+    font-size: 16px;
+}
+
+.filepond--label-action {
+    text-decoration: underline;
+    color: #4CAF50;
+}
+
+.filepond--item {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* hiển thị ảnh */
+.chat .inner-body .inner-images img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    background: #efefef;
+    padding: 10px;
+    margin: 0 5px 5px 0;
+    border-radius: 5px;
+}
+.chat .inner-outgoing .inner-images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.chat .inner-body .inner-outgoing .inner-images {
+    margin-left: auto;
+    text-align: right;
+}
+
+.chat .inner-body .inner-outgoing .inner-images img {
+    margin: 0 0 5px 5px;
+}
+/* 
+#upload-filepond {
+    opacity: 1;
+    position: absolute;
+    pointer-events: none;
+    height: 100;
+    width: 10;
+} */
+#upload-filepond {
+    display: none;
+}
+
+#btn-upload {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+#preview-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    background: rgb(213, 207, 207);
+}
+
+.preview-image {
+
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+/* Xóa ảnh đã chọn */
+.preview-image-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.preview-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.remove-image {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    line-height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    user-select: none;
+}
+
+.remove-image:hover {
+    background: red;
 }

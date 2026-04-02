@@ -1,40 +1,18 @@
-const cloudinary = require("cloudinary").v2;
-const streamifier = require("streamifier");
+const uploadToCloundinary = require("../../helper/uploadToCloudinary");
 
-cloudinary.config({
-    cloud_name: "dt3lp2vht",
-    api_key: "625188943665357",
-    api_secret: "5VsPdU-Xep2OVojPi3OtY4zUwXk"
-})
-
+//Nhận file từ request → upload → gắn vào req.body
 module.exports.uploadSigleImage = async (req, res, next) => {
     if (req.file) {
-        let streamUpload = (req) => {
-            return new Promise((resolve, reject) => {
-                let stream = cloudinary.uploader.upload_stream(
-                    
-                    (error, result) => {
-                        if (result) {
-                            resolve(result);
-                        } else {
-                            reject(error);
-                        }
-                    }
-                );
+        const link = await uploadToCloundinary(req.file.buffer);
+        req.body[req.file.fieldname] = link;
+    }
+    next();
+}
 
-                streamifier.createReadStream(req.file.buffer).pipe(stream);
-
-            });
-        };
-
-        async function upload(req) {
-            let result = await streamUpload(req);
-            req.body[req.file.fieldname] = result.secure_url;
-            next();
-        }
-
-        upload(req);
-    } else {
-        next();
+//Nhận file từ request → upload → gắn vào req.body
+module.exports.uploadSigleImageSocket = async (req, res, next) => {
+    if (req.file) {
+        const link = await uploadToCloundinary(req.file.buffer);
+        req.body[req.file.fieldname] = link;
     }
 }

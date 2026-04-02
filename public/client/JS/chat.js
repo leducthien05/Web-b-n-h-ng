@@ -1,25 +1,49 @@
 //CLIENT SEND MESSAGE
+const divBody = document.querySelector(".chat .inner-body");
+const pond = FilePond.create(document.querySelector('.filepond'), {
+    allowMultiple: true,
+    imagePreviewHeight: 120,
+    allowImagePreview: true,
+    allowImageExifOrientation: true,
+    instantUpload: false
+});
+setTimeout(() => {
+    divBody.scrollTop = divBody.scrollHeight;
+}, 0);
+//====Clear preview
+//====End clear preveiw
 const formSendData = document.querySelector(".chat .inner-form");
 if (formSendData) {
-    const divBody = document.querySelector(".chat .inner-body");
-    formSendData.addEventListener("submit", (e) => {
+    formSendData.addEventListener("submit", async (e) => {
         e.preventDefault();
+        const files = pond.getFiles();
+        const buffers = [];
+        for (let item of files) {
+            const file = item.file;
+            const arrayBuffer = await file.arrayBuffer();
+            buffers.push(
+                arrayBuffer
+            );
+        }
         const content = e.target.elements.content.value;
-        if (content) {
-            socket.emit("CLIENT_SEND_MESSAGE", (content));
+        if (content || buffers.length > 0) {
+            socket.emit("CLIENT_SEND_MESSAGE", {
+                content: content,
+                image: buffers
+            });
             e.target.elements.content.value = "";
-            socket.on("SERVER_RETURN_TYPING", "hidden");
+            pond.removeFiles();
+            clearPreview();
+            socket.emit("CLIENT_SEND_TYPING", "hidden");
         }
     });
-    // scroll xuống cuối
-    divBody.scrollTop = divBody.scrollHeight;
 }
 //Show Typing
 let timeout;
 const showTyping = () => {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
-        socket.emit("CLIENT_SEND_TYPING", "HIDEN");
+        socket.emit("CLIENT_SEND_TYPING", "hidden");
     }, 5000);
 }
 //End Show Typing
@@ -30,21 +54,79 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
     const myID = document.querySelector(".chat").getAttribute("my-id");
     const div = document.createElement("div");
     const listTyping = document.querySelector(".chat .inner-body .inner-list-typing");
-    let html = ``;
+    let html = "";
+    let htmlContent = "";
+    let htmlImage = "";
+
     if (myID == data.userID) {
         div.classList.add("inner-outgoing");
     } else {
-        html = `<div class="inner-name">${data.userName}</div>`
-        div.classList = "inner-incoming";
+        html = `<div class="inner-name">${data.userName}</div>`;
+        div.classList.add("inner-incoming");
     }
+
+    if (data.content) {
+        htmlContent = `<div class="inner-content">${data.content}</div>`;
+    }
+    console.log("image:", data.image);
+    console.log("isArray:", Array.isArray(data.image));
+    if (data.image && data.image.length > 0) {
+        htmlImage += `<div class="inner-images">`;
+
+        for (const item of data.image) {
+            htmlImage += `<img src="${item}">`;
+        }
+
+        htmlImage += `</div>`;
+    }
+
     div.innerHTML = `
         ${html}
-        <div class="inner-content">${data.content}</div>
+        ${htmlContent}
+        ${htmlImage}
     `;
     divBody.insertBefore(div, listTyping);
     // scroll xuống cuối
     divBody.scrollTop = divBody.scrollHeight;
 });
+
+//===============click upload image by lable
+const lableUpload = document.querySelector(".chat .inner-foot [lable-upload]");
+const input = document.getElementById("upload-filepond");
+const preview = document.getElementById("preview-container");
+if (lableUpload) {
+    lableUpload.addEventListener("click", () => {
+        pond.browse();
+    });
+}
+function clearPreview() {
+    preview.innerHTML = "";   // xoá toàn bộ ảnh preview
+    selectedFiles = [];       // xoá danh sách file
+    input.value = "";         // reset input
+}
+// khi chọn ảnh → preview
+input.addEventListener("change", (e) => {
+    preview.innerHTML = ""; // reset (nếu muốn giữ thì bỏ dòng này)
+
+    const files = e.target.files;
+
+    for (let file of files) {
+        if (!file.type.startsWith("image/")) continue;
+
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+            const img = document.createElement("img");
+            img.src = event.target.result;
+            img.classList.add("preview-image");
+
+            preview.appendChild(img);
+        };
+
+        reader.readAsDataURL(file);
+    }
+});
+//=================End click upload image by lable
 
 //Icon - emoji-picker-element
 import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js'
@@ -69,7 +151,7 @@ if (picker) {
         input.focus();
         input.setSelectionRange(end, end);
         showTyping();
-        
+
     });
     //typing
     input.addEventListener("keyup", () => {

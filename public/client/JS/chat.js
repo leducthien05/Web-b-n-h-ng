@@ -86,6 +86,8 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
         ${htmlImage}
     `;
     divBody.insertBefore(div, listTyping);
+    //Preview full image
+    const gallery = new Viewer(div);
     // scroll xuống cuối
     divBody.scrollTop = divBody.scrollHeight;
 });
@@ -196,3 +198,9 @@ if (elementListTyping) {
 
 }
 // End SERVER_RETURN_TYPING
+
+// Preview-full-image
+const bodyChatPreviewImage = document.querySelector(".chat .inner-body");
+if(bodyChatPreviewImage){
+    const gallery = new Viewer(bodyChatPreviewImage);
+}

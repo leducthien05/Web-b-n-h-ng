@@ -1,10 +1,11 @@
 const HomePage = require("./HomePage.router");
 const Product = require("./product.router");
-const Search = require("../../router/client/search.router");
-const Cart = require("../client/cart.router");
-const Checkout = require("../client/checkout.router");
-const User = require("../client/user.router");
-const Chat = require("../client/chat.router");
+const Search = require("./search.router");
+const Cart = require("./cart.router");
+const Checkout = require("./checkout.router");
+const User = require("./user.router");
+const Chat = require("./chat.router");
+const Friend = require("./friend.router")
 
 const categoryMiddleware = require("../../middleware/client/category.middleware");
 const cartMiddleware = require("../../middleware/client/cart.middleware");
@@ -24,5 +25,6 @@ module.exports = (app) =>{
     app.use("/checkout", Checkout);
     app.use("/user", User);
     app.use("/chat",authMiddleware.requireAuth ,Chat);
+    app.use("/friend",authMiddleware.requireAuth ,Friend);
 };
 

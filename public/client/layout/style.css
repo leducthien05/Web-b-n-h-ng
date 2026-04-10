@@ -787,3 +787,97 @@ h2 {
 .remove-image:hover {
     background: red;
 }
+
+/* GRID */
+.friend-list {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    padding: 10px;
+}
+
+/* CARD */
+.friend-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    transition: 0.2s;
+}
+
+.friend-card:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transform: translateY(-3px);
+}
+
+/* ẢNH (quan trọng nhất) */
+.friend-avatar {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 0; /* bỏ tròn */
+}
+
+/* BODY */
+.friend-card .card-body {
+    display: block !important;
+    text-align: left;
+    padding: 12px;
+}
+
+/* TÊN */
+.friend-card h6 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+/* MUTUAL */
+.friend-card small {
+    color: #65676b;
+}
+
+/* BUTTON FULL WIDTH */
+.friend-card .btn {
+    width: 100%;
+    border-radius: 6px;
+}
+
+/* BUTTON PRIMARY (Facebook xanh) */
+.friend-card .btn-primary {
+    background: #1877f2;
+    border: none;
+}
+
+/* BUTTON XÁM */
+.friend-card .btn-outline-danger,
+.friend-card .btn-light {
+    background: #e4e6eb;
+    border: none;
+    color: #000;
+}
+
+/* khoảng cách nút */
+.friend-card .d-flex {
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+.friend-actions .btn-cancel {
+    display: none;
+}
+
+.friend-actions.add .btn-add {
+    display: none;
+}
+
+.friend-actions.add .btn-cancel {
+    display: inline-block;
+}
+/* input.form-control {
+    border-radius: 8px 0 0 8px;
+}
+
+button.btn-primary {
+    border-radius: 0 8px 8px 0;
+} */

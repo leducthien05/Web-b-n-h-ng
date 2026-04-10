@@ -106,6 +106,7 @@ function clearPreview() {
     selectedFiles = [];       // xoá danh sách file
     input.value = "";         // reset input
 }
+if(input){
 // khi chọn ảnh → preview
 input.addEventListener("change", (e) => {
     preview.innerHTML = ""; // reset (nếu muốn giữ thì bỏ dòng này)
@@ -128,6 +129,8 @@ input.addEventListener("change", (e) => {
         reader.readAsDataURL(file);
     }
 });
+}
+
 //=================End click upload image by lable
 
 //Icon - emoji-picker-element

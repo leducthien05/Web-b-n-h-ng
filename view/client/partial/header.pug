@@ -21,6 +21,7 @@ header.header
                             type="text"
                             placeholder="Nhập từ khóa..."
                             class="form-control"
+                            value = keyword || ""
                             name="keyword"
                         )
                         button(
@@ -52,9 +53,12 @@ header.header
                             li(class="nav-item")
                                 a(href="/user/info") #{user.username}
                             li(class="nav-item")
-                                a(href="/user/logout") Đăng xuất
-                            li(class="nav-item")
                                 a(href="/chat") Chat
+                            li(class="nav-item")
+                                a(href="/friend") Bạn bè
+                            li(class="nav-item")
+                                a(href="/user/logout") Đăng xuất
+                            
                         else
                             li(class="nav-item")
                                 a(href="/user/register") Đăng ký

@@ -1,7 +1,7 @@
 const User = require("../../model/user.model");
 
 const friendSocket = require("../../socket/client/friend.socket");
-// [GET] /friend
+// [GET] /friend/not-friend
 module.exports.notFriend = async (req, res) => {
     //Socket request add friend
     friendSocket.reqFriend(res);
@@ -20,5 +20,25 @@ module.exports.notFriend = async (req, res) => {
     res.render("client/page/friend/notFriend", {
         titlePage: "Bạn bè",
         friends: user
+    });
+}
+// [GET] /friend/request-friend
+module.exports.reqFriend = async (req, res) => {
+    //Socket request cancel friend
+    friendSocket.reqFriend(res);
+    //End Socket request cancel friend
+    const idUser = res.locals.user._id;
+    const myUser = await User.findOne({
+        _id: idUser,
+    }).select("requestFriends");
+    const requestFriends = myUser.requestFriends;
+    const friends = await User.find({
+        _id: { $in: requestFriends },
+        status: "active",
+        deleted: false
+    }).select("avatar username");
+    res.render("client/page/friend/reqFriend", {
+        titlePage: "Lời mời đã gửi",
+        friends: friends
     });
 }

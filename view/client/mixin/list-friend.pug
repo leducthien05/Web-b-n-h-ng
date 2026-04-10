@@ -1,0 +1,27 @@
+mixin list-friend(friends) 
+    //- Danh sách bạn bè
+    div(class="friend-list")
+        each friend in friends
+            div(class="card friend-card mb-3")
+                div(class="card-body d-flex align-items-center justify-content-between")
+                    //- Thông tin bên trái
+                    div(class="d-flex align-items-center")
+                        img(
+                            class="friend-avatar"
+                            src="https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/anh-den-ngau.jpeg"
+                        )
+                        div(class="ms-3")
+                            h6(class="mb-0") #{friend.username}
+                        //-     small.text-muted= friend.mutual + " bạn chung"
+
+                    //- Nút bên phải
+                    div(class="d-flex gap-2 friend-actions")
+                        button(
+                            class="btn btn-primary btn-sm btn-add"
+                            btn-add-friend=friend._id
+                        ) Kết bạn
+
+                        button(
+                            class="btn btn-danger btn-sm btn-cancel"
+                            btn-cancel-friend=friend._id
+                        ) Hủy yêu cầu

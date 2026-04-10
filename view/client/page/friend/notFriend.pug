@@ -1,7 +1,9 @@
-extend ../../layout/default
+extends ../../layout/default
+include ../../mixin/list-friend.pug
 
 block main 
     .container.mt-4
+        include ../../partial/friend_menu.pug
         .col-lg-8.mx-auto
             h3.mb-4.text-center Danh sách bạn bè
 
@@ -10,36 +12,6 @@ block main
             input.form-control(type="text" placeholder="Tìm kiếm bạn bè...")
             button.btn.btn-primary Tìm
 
-        //- Danh sách bạn bè
-        .friend-list
-            each friend in friends
-                .card.friend-card.mb-3
-                    .card-body.d-flex.align-items-center.justify-content-between
-                    //- Thông tin bên trái
-                    div(class="d-flex align-items-center")
-                        img.friend-avatar(src="https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/anh-den-ngau.jpeg")
-                        .ms-3
-                            h6(class="mb-0") #{friend.username}
-                        //-     small.text-muted= friend.mutual + " bạn chung"
-
-                    //- Nút bên phải
-                    .d-flex.gap-2.friend-actions
-                        button(
-                            class="btn btn-primary btn-sm btn-add"
-                            btn-add-friend=friend._id
-                        ) Kết bạn
-
-                        button(
-                            class="btn btn-danger btn-sm btn-cancel"
-                            btn-cancel-friend=friend._id
-                        ) Hủy yêu cầu
-                        //- button(
-                        //-     class="btn btn-outline-primary btn-sm"
-                        //-     btn-chat-friend=friend._id
-                        //- ) Nhắn tin
-                        //- button(
-                        //-     class="btn btn-outline-danger btn-sm"
-                        //-     btn-cancel-friend=friend._id
-                        //- ) Hủy kết bạn 
+        +list-friend(friends)
 block script
-    script(src="client/JS/friend.js") 
+    script(src="/client/JS/friend.js") 

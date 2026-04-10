@@ -866,12 +866,18 @@ h2 {
 .friend-actions .btn-cancel {
     display: none;
 }
+.friend-actions .btn-accept {
+    display: none;
+}
 
 .friend-actions.add .btn-add {
     display: none;
 }
 
 .friend-actions.add .btn-cancel {
+    display: inline-block;
+}
+.friend-actions.add .btn-accept {
     display: inline-block;
 }
 /* input.form-control {

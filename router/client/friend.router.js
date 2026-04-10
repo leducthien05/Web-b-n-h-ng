@@ -5,6 +5,7 @@ const controller = require("../../controller/client/friend.controller");
 const validate = require("../../validates/client/user.validate");
 const middleware = require("../../middleware/client/auth.middleware");
 
-router.get("/", controller.notFriend);
+router.get("/not-friend", controller.notFriend);
+router.get("/request-friend", controller.reqFriend);
 
 module.exports = router;

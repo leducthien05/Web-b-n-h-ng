@@ -7,13 +7,15 @@ module.exports.notFriend = async (req, res) => {
     friendSocket.reqFriend(res);
     //End Socket request add friend
     const idUser = res.locals.user.id;
-    const myUsert = await User.findOne({
+    const myUser = await User.findOne({
         _id: idUser,
-    }).select("requestFriends acceptFriends");
-    const arrRequest = myUsert.requestFriends;
-    const arrAccept = myUsert.acceptFriends;
+    }).select("requestFriends acceptFriends listFriends");
+    const listFriend = myUser.listFriends;
+    const idFriend = listFriend.map(item => item.friend_id);
+    const arrRequest = myUser.requestFriends;
+    const arrAccept = myUser.acceptFriends;
     const user = await User.find({
-        _id: { $nin: [idUser, ...arrAccept, ...arrRequest] },
+        _id: { $nin: [idUser, ...idFriend, ...arrAccept, ...arrRequest] },
         status: "active",
         deleted: false
     }).select("id avatar username");
@@ -64,7 +66,7 @@ module.exports.acceptFriend = async (req, res) => {
 }
 // [GET] /friend
 module.exports.index = async (req, res) => {
-    
+
     res.render("client/page/friend/index", {
         titlePage: "Danh sách bạn bè"
     });

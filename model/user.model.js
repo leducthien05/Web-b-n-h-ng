@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     listFriends: [
         {
             friend_id: String,
-            id_room_chat: String
+            room_chat_id: String
         }
     ],
     status:{

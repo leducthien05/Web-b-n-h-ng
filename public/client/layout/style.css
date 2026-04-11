@@ -904,6 +904,22 @@ h2 {
 .friend-actions.refuse .btn-refuse {
     display: none;
 }
+/* có accepted */
+.friend-actions.accepted .btn-cancel {
+    display: none;
+}
+.friend-actions.accepted .btn-accept {
+    display: none;
+}
+.friend-actions.accepted .btn-deleted {
+    display: none;
+}
+.friend-actions.accepted .btn-accepted {
+    display: inline;
+}
+.friend-actions.accepted .btn-refuse {
+    display: none;
+}
 /* input.form-control {
     border-radius: 8px 0 0 8px;
 }

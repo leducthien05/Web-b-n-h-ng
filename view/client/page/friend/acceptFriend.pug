@@ -5,8 +5,10 @@ block main
     .container.mt-4
         include ../../partial/friend_menu.pug
         div(class="col-lg-8 mx-auto")
-            h3(class="mb-4 text-center") Lời mời đã gửi
-        div(class="friend-list")
+            h3(class="mb-4 text-center") Lời mời kết bạn
+        div(
+            class="friend-list"
+            )
             each friend in friends
                 div(class="card friend-card mb-3")
                     div(class="card-body d-flex align-items-center justify-content-between")
@@ -20,14 +22,19 @@ block main
                             //-     small.text-muted= friend.mutual + " bạn chung"
                         div(class="d-flex gap-2 friend-actions add")
                             button(
-                                class="btn btn-primary btn-sm btn-add"
-                                btn-add-friend=friend._id
-                            ) Kết bạn
+                                class="btn btn-secondary btn-sm btn-deleted"
+                            ) Đã xóa
 
                             button(
-                                class="btn btn-danger btn-sm btn-cancel"
-                                btn-cancel-friend=friend._id
-                            ) Hủy yêu cầu
-                            
+                                class="btn btn-primary btn-sm btn-accept"
+                                btn-accept-friend=friend.id
+                            ) Chấp nhận
+                            button(
+                                class="btn btn-secondary btn-sm btn-refuse"
+                                btn-refuse-friend=friend.id
+                            ) Xóa
+                            div(
+                                class="btn btn-secondary btn-sm btn-accepted"
+                            ) Đã xác nhận
 block script
     script(src="/client/JS/friend.js") 

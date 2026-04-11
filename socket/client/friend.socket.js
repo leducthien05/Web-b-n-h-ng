@@ -33,13 +33,17 @@ module.exports.reqFriend = async (res) => {
             }
 
             // Ví dụ: gửi realtime cho user kia
-            socket.broadcast.emit("RETURN_NOTIFICATION", {
-                text: "Bạn có một lời mời kêt bạn"
-
+            const userReq = await User.findOne({
+                _id: idUser
+            });
+            socket.broadcast.emit("RETURN_REQUEST_FRIEND", {
+                text: "Bạn có một lời mời kêt bạn",
+                IdReq: idUser,
+                infoUser: userReq
             });
         });
 
-        //Hủy yêu cầu kết bạn
+        //Hủy gửi yêu cầu kết bạn
         socket.on("SEND_CANCEL_FRIEND_REQUEST", async (ID) => {
             const existRequest = await User.findOne({
                 _id: idUser,
@@ -63,13 +67,47 @@ module.exports.reqFriend = async (res) => {
                 _id: ID,
                 acceptFriends: idUser
             });
-            if (existRequest) {
+            if (existAccept) {
                 await User.updateOne({
                     _id: ID
                 }, {
                     $pull: {
                         acceptFriends: idUser
                     }
+                });
+            }
+            _io.emit("RETURN_CANCEL_FRIEND", {
+                IdReq: idUser,
+                IdAccept: ID
+            });
+        });
+        
+        // Từ chối yêu cầu kết bạn
+        socket.on("CLIENT_REFUSE_REQUEST", async (ID) =>{
+            //Kiểm tra ID tồn tại trong requestFriends hay không
+            const existRequest = await User.findOne({
+                _id: ID,
+                requestFriends: idUser
+            });
+            // Xóa id khỏi request
+            if(existRequest){
+                await User.updateOne({
+                    _id: ID
+                }, {
+                    $pull: {requestFriends: idUser}
+                });
+            }
+            //Kiểm tra ID tồn tại trong acceptFriends hay không
+            const existAccept = await User.findOne({
+                _id: idUser,
+                acceptFriends: ID
+            });
+            // Xóa id khỏi accept
+            if(existAccept){
+                await User.updateOne({
+                    _id: idUser
+                }, {
+                    $pull: {acceptFriends: ID}
                 });
             }
         });

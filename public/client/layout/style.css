@@ -863,13 +863,14 @@ h2 {
     gap: 8px;
     margin-top: 10px;
 }
+/* Chưa có add */
 .friend-actions .btn-cancel {
     display: none;
 }
 .friend-actions .btn-accept {
     display: none;
 }
-
+/* Đã có add */
 .friend-actions.add .btn-add {
     display: none;
 }
@@ -879,6 +880,29 @@ h2 {
 }
 .friend-actions.add .btn-accept {
     display: inline-block;
+}
+
+.friend-actions.add .btn-deleted {
+    display: none;
+}
+.friend-actions.add .btn-accepted {
+    display: none;
+}
+/* Đã có refuse */
+.friend-actions.refuse .btn-cancel {
+    display: none;
+}
+.friend-actions.refuse .btn-accept {
+    display: none;
+}
+.friend-actions.refuse .btn-deleted {
+    display: inline;
+}
+.friend-actions.refuse .btn-accepted {
+    display: none;
+}
+.friend-actions.refuse .btn-refuse {
+    display: none;
 }
 /* input.form-control {
     border-radius: 8px 0 0 8px;

@@ -7,5 +7,7 @@ const middleware = require("../../middleware/client/auth.middleware");
 
 router.get("/not-friend", controller.notFriend);
 router.get("/request-friend", controller.reqFriend);
+router.get("/accept-friend", controller.acceptFriend);
+router.get("/", controller.index);
 
 module.exports = router;

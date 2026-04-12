@@ -59,6 +59,7 @@ module.exports.acceptFriend = async (req, res) => {
         status: "active",
         deleted: false
     }).select("avatar username");
+    console.log(friends)
     res.render("client/page/friend/acceptFriend", {
         titlePage: "Lời mời đã gửi",
         friends: friends

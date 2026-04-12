@@ -73,7 +73,6 @@ const badgeAcceptFriends = document.querySelector("[badge-users-accept]");
 if (badgeAcceptFriends) {
     const idUser = badgeAcceptFriends.getAttribute("badge-users-accept");
     socket.on("RETURN_LENGTH_ACCEPT_FRIEND", data => {
-        console.log(data)
         if (idUser == data.IDUser) {
             badgeAcceptFriends.innerHTML = data.newLength;
         }
@@ -86,15 +85,17 @@ if (badgeAcceptFriends) {
 const dataUserAccept = document.querySelector("[data-accept-friend]");
 if (dataUserAccept) {
     socket.on("RETURN_ACCEPT_FRIEND", data => {
+        console.log(data)
         const idUser = dataUserAccept.getAttribute("data-accept-friend");
         if (data.IDUser == idUser) {
             const divBody = document.querySelector(".friend-list");
             const div = document.createElement("div");
+            div.setAttribute("user_id", data.infoUser._id);
             let html = `
                 <div class="card friend-card mb-3">
                     <div class="card-body d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
-                            <img class="friend-avatar" src=${data.infoUser.image}>
+                            <img class="friend-avatar" src=https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/anh-den-ngau.jpeg>
                             <div class="ms-3">
                                 <h6 class="mb-0">
                                     ${data.infoUser.username}
@@ -123,7 +124,6 @@ if (dataUserAccept) {
 
             // Từ chối lời mời kết bạn
             const btnRefuse = div.querySelector("[btn-refuse-friend]");
-            console.log(btnRefuse);
             btnRefuse.addEventListener("click", () => {
                 const idFriendRefure = btnRefuse.getAttribute("btn-refuse-friend");
                 const parent = btnRefuse.closest(".friend-actions");
@@ -134,7 +134,6 @@ if (dataUserAccept) {
             // Hết Từ chối lời mời kết bạn
             // Chấp nhận lời mời kết bạn
             const btnAccept = div.querySelector("[btn-accept-friend]");
-            console.log(btnAccept);
             btnAccept.addEventListener("click", () => {
                 const idFriendAccept = btnAccept.getAttribute("btn-accept-friend");
                 const parent = btnAccept.closest(".friend-actions");
@@ -143,10 +142,24 @@ if (dataUserAccept) {
                 socket.emit("CLIENT_ACCEPT_REQUEST", idFriendAccept);
             });
             // Hết Chấp nhận lời mời kết bạn
-            
+
         }
 
     });
 }
-
 // END RETURN_ACCEPT_FRIEND
+
+// RETURN_CANCEL_REQUEST_FRIEND
+socket.on("RETURN_CANCEL_REQUEST_FRIEND", data => {
+    const idA = data.userIdA;
+    const div = document.querySelector(`[user_id="${idA}"]`);
+    if (div) {
+        const dataUserAccept = document.querySelector("[data-accept-friend]");
+        const idB = dataUserAccept.getAttribute("data-accept-friend");
+        if (idB == data.userIdB) {
+            dataUserAccept.removeChild(div);
+
+        }
+    }
+});
+// END RETURN_CANCEL_REQUEST_FRIEND

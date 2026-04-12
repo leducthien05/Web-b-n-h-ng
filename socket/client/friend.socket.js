@@ -92,17 +92,24 @@ module.exports.reqFriend = async (res) => {
                     }
                 });
             }
-            // Ví dụ: gửi realtime cho B
+            // Badge
             const userAccept = await User.findOne({
                 _id: ID,
-
             });
-            const newLength = userAccept.acceptFriends.length;
+            const newLength = userAccept.requestFriends.length;
             socket.broadcast.emit("RETURN_LENGTH_ACCEPT_FRIEND", {
                 IDUser: ID,
                 newLength: newLength,
                 myID: idUser
             });
+            // Record
+            // userIdA: Người hủy yêu cầu
+            // userIdB: Người bị hủy
+            socket.broadcast.emit("RETURN_CANCEL_REQUEST_FRIEND", {
+                userIdA: idUser,
+                userIdB: ID
+            });
+
         });
         
         // Từ chối yêu cầu kết bạn

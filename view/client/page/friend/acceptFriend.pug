@@ -8,6 +8,7 @@ block main
             h3(class="mb-4 text-center") Lời mời kết bạn
         div(
             class="friend-list"
+            data-accept-friend = user.id
             )
             each friend in friends
                 div(class="card friend-card mb-3")

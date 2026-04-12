@@ -10,33 +10,7 @@ if (btnAddFriend.length > 0) {
         });
     });
 }
-socket.on("RETURN_REQUEST_FRIEND", data => {
-    const divBody = document.querySelector(".friend-list");
-    const div = document.createElement("div");
-    let html = `
-        <div class="card friend-card mb-3">
-            <div class="card-body d-flex align-items-center justify-content-between">
-                <div class="d-flex align-items-center">
-                    <img class="friend-avatar" src=${data.infoUser.image}>
-                <div class="ms-3">
-                    <h6 class="mb-0">
-                        ${data.infoUser.username}
-                    </h6>
-                </div>
-            </div>
-            <div class="d-flex gap-2 friend-actions add">
-                <button class="btn btn-primary btn-sm btn-add" btn-add-friend=${data.infoUser.id}>
-                    Kết bạn
-                </button>
-                <button class="btn btn-danger btn-sm btn-cancel" btn-cancel-friend=${data.infoUser.id}>
-                    Hủy yêu cầu</button>
-                </div>
-            </div>
-        </div>
-    `;
-    div.innerHTML = html;
-    divBody.appendChild(div);
-});
+
 
 // Kết thúc chức năng yêu cầu kết bạn
 
@@ -99,10 +73,80 @@ const badgeAcceptFriends = document.querySelector("[badge-users-accept]");
 if (badgeAcceptFriends) {
     const idUser = badgeAcceptFriends.getAttribute("badge-users-accept");
     socket.on("RETURN_LENGTH_ACCEPT_FRIEND", data => {
-        if(idUser == data.IDUser){
+        console.log(data)
+        if (idUser == data.IDUser) {
             badgeAcceptFriends.innerHTML = data.newLength;
         }
     });
 }
 
 // End RETURN_LENGTH_ACCEPT_FRIEND
+
+// RETURN_ACCEPT_FRIEND
+const dataUserAccept = document.querySelector("[data-accept-friend]");
+if (dataUserAccept) {
+    socket.on("RETURN_ACCEPT_FRIEND", data => {
+        const idUser = dataUserAccept.getAttribute("data-accept-friend");
+        if (data.IDUser == idUser) {
+            const divBody = document.querySelector(".friend-list");
+            const div = document.createElement("div");
+            let html = `
+                <div class="card friend-card mb-3">
+                    <div class="card-body d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <img class="friend-avatar" src=${data.infoUser.image}>
+                            <div class="ms-3">
+                                <h6 class="mb-0">
+                                    ${data.infoUser.username}
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2 friend-actions add">
+                            <button class="btn btn-secondary btn-sm btn-deleted">
+                                Đã xóa
+                            </button>
+                            <button class="btn btn-primary btn-sm btn-accept" btn-accept-friend=${data.infoUser._id}>
+                                Chấp nhận
+                            </button>
+                            <button class="btn btn-secondary btn-sm btn-refuse" btn-refuse-friend=${data.infoUser._id}>
+                                Xóa
+                            </button>
+                            <div class="btn btn-info btn-sm btn-accepted">
+                                Đã xác nhận
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            div.innerHTML = html;
+            divBody.appendChild(div);
+
+            // Từ chối lời mời kết bạn
+            const btnRefuse = div.querySelector("[btn-refuse-friend]");
+            console.log(btnRefuse);
+            btnRefuse.addEventListener("click", () => {
+                const idFriendRefure = btnRefuse.getAttribute("btn-refuse-friend");
+                const parent = btnRefuse.closest(".friend-actions");
+                parent.classList.remove("add");
+                parent.classList.add("refuse");
+                socket.emit("CLIENT_REFUSE_REQUEST", idFriendRefure);
+            });
+            // Hết Từ chối lời mời kết bạn
+            // Chấp nhận lời mời kết bạn
+            const btnAccept = div.querySelector("[btn-accept-friend]");
+            console.log(btnAccept);
+            btnAccept.addEventListener("click", () => {
+                const idFriendAccept = btnAccept.getAttribute("btn-accept-friend");
+                const parent = btnAccept.closest(".friend-actions");
+                parent.classList.remove("add");
+                parent.classList.add("accepted");
+                socket.emit("CLIENT_ACCEPT_REQUEST", idFriendAccept);
+            });
+            // Hết Chấp nhận lời mời kết bạn
+            
+        }
+
+    });
+}
+
+// END RETURN_ACCEPT_FRIEND

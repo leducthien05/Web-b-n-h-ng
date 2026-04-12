@@ -42,13 +42,19 @@ module.exports.reqFriend = async (res) => {
             const newLength = userAccept.acceptFriends.length;
             socket.broadcast.emit("RETURN_LENGTH_ACCEPT_FRIEND", {
                 IDUser: ID,
-                newLength: newLength
-            });
-            socket.broadcast.emit("RETURN_REQUEST_FRIEND", {
-                text: "Bạn có một lời mời kêt bạn",
-                IdReq: ID,
+                newLength: newLength,
                 infoUser: userAccept
             });
+
+            // Lấy thông tin của A trả về cho B
+            const userA = await User.findOne({
+                _id: idUser
+            }).select("username image id");
+            socket.broadcast.emit("RETURN_ACCEPT_FRIEND", {
+                IDUser: ID,
+                infoUser: userA
+            });
+            
         });
 
         //Hủy gửi yêu cầu kết bạn
@@ -86,9 +92,16 @@ module.exports.reqFriend = async (res) => {
                     }
                 });
             }
-            _io.emit("RETURN_CANCEL_FRIEND", {
-                IdReq: idUser,
-                IdAccept: ID
+            // Ví dụ: gửi realtime cho B
+            const userAccept = await User.findOne({
+                _id: ID,
+
+            });
+            const newLength = userAccept.acceptFriends.length;
+            socket.broadcast.emit("RETURN_LENGTH_ACCEPT_FRIEND", {
+                IDUser: ID,
+                newLength: newLength,
+                myID: idUser
             });
         });
         
@@ -122,6 +135,14 @@ module.exports.reqFriend = async (res) => {
                     $pull: {acceptFriends: ID}
                 });
             }
+            const userRequest = await User.findOne({
+                _id: ID,
+            });
+            const newLength = userRequest.requestFriends.length;
+            socket.emit("RETURN_LENGTH_ACCEPT_FRIEND", {
+                IDUser: idUser,
+                newLength: newLength    
+            });
         });
 
         //Chấp nhận yêu cầu kết bạn

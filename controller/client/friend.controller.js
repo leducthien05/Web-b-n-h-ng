@@ -67,8 +67,23 @@ module.exports.acceptFriend = async (req, res) => {
 }
 // [GET] /friend
 module.exports.index = async (req, res) => {
-
+    // //Socket accept friend
+    friendSocket.reqFriend(res);
+    // //End Socket accept friend
+    const idUser = res.locals.user._id;
+    const myUser = await User.findOne({
+        _id: idUser,
+    }).select("listFriends");
+    const listFriends = myUser.listFriends;
+    const idFriend = listFriends.map(item => item.friend_id);
+    const friends = await User.find({
+        _id: { $in: idFriend },
+        status: "active",
+        deleted: false
+    }).select("avatar username statusOnline");
+    console.log(friends)
     res.render("client/page/friend/index", {
-        titlePage: "Danh sách bạn bè"
+        titlePage: "Lời mời đã gửi",
+        friends: friends
     });
 }

@@ -4,3 +4,46 @@ include ../../mixin/list-friend.pug
 block main 
     .container.mt-4
         include ../../partial/friend_menu.pug
+        .col-lg-8.mx-auto
+            h3.mb-4.text-center Danh sách người dùng
+
+        //- Thanh tìm kiếm
+        .input-group.mb-4
+            input.form-control(type="text" placeholder="Tìm kiếm bạn bè...")
+            button.btn.btn-primary Tìm
+
+        //- Danh sách bạn bè
+        div(
+            class="friend-list"
+            )
+            each friend in friends
+                div(
+                    class="card friend-card mb-3"
+                    )   
+                    div(class="card-body d-flex align-items-center justify-content-between")
+                        div(class="status")
+                            if(friend.statusOnline == "online")
+                                span(class="status-dot online") 
+                                span(class="status-text online") Online
+                            else
+                                span(class="status-dot offline") 
+                                span(class="status-text offline") Offline
+                        //- Thông tin bên trái
+                        div(class="d-flex align-items-center")
+                            img(
+                                class="friend-avatar"
+                                src="https://www.vietnamworks.com/hrinsider/wp-content/uploads/2023/12/anh-den-ngau.jpeg"
+                            )
+                            div(class="ms-3")
+                                h6(class="mb-0") #{friend.username}
+                            //-     small.text-muted= friend.mutual + " bạn chung"
+
+                        //- Nút bên phải
+                        div(class="d-flex gap-2 friend-actions")
+                            button(
+                                class="btn btn-primary btn-sm btn-add"
+                            ) Nhắn tin
+
+                            
+block script
+    script(src="/client/JS/friend.js") 

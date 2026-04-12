@@ -82,9 +82,11 @@ if (badgeAcceptFriends) {
 // End RETURN_LENGTH_ACCEPT_FRIEND
 
 // RETURN_ACCEPT_FRIEND
-const dataUserAccept = document.querySelector("[data-accept-friend]");
-if (dataUserAccept) {
-    socket.on("RETURN_ACCEPT_FRIEND", data => {
+
+socket.on("RETURN_ACCEPT_FRIEND", data => {
+    // Trang lời mời kết bạn
+    const dataUserAccept = document.querySelector("[data-accept-friend]");
+    if (dataUserAccept) {
         console.log(data)
         const idUser = dataUserAccept.getAttribute("data-accept-friend");
         if (data.IDUser == idUser) {
@@ -142,24 +144,38 @@ if (dataUserAccept) {
                 socket.emit("CLIENT_ACCEPT_REQUEST", idFriendAccept);
             });
             // Hết Chấp nhận lời mời kết bạn
-
         }
+    }
+    // Trang danh sách người dùng
+    const dataAcceptNoFriend = document.querySelector("[data_user_no_friend]");
+    if (dataAcceptNoFriend) {
+        const idB = dataAcceptNoFriend.getAttribute("data_user_no_friend");
+        if (idB == data.IDUser) {
+            const div = dataAcceptNoFriend.querySelector(`[user_id="${data.infoUser._id}"]`);
+            if (div) {
+                dataAcceptNoFriend.removeChild(div);
+            }
+        }
+    }
 
-    });
-}
+});
 // END RETURN_ACCEPT_FRIEND
 
 // RETURN_CANCEL_REQUEST_FRIEND
-socket.on("RETURN_CANCEL_REQUEST_FRIEND", data => {
-    const idA = data.userIdA;
-    const div = document.querySelector(`[user_id="${idA}"]`);
-    if (div) {
-        const dataUserAccept = document.querySelector("[data-accept-friend]");
-        const idB = dataUserAccept.getAttribute("data-accept-friend");
-        if (idB == data.userIdB) {
-            dataUserAccept.removeChild(div);
+const dataUserAcceptCancel = document.querySelector("[data-accept-friend]");
+if (dataUserAcceptCancel) {
+    socket.on("RETURN_CANCEL_REQUEST_FRIEND", data => {
+        const idA = data.userIdA;
+        const div = document.querySelector(`[user_id="${idA}"]`);
+        if (div) {
+            const dataUserAccept = document.querySelector("[data-accept-friend]");
+            const idB = dataUserAccept.getAttribute("data-accept-friend");
+            if (idB == data.userIdB) {
+                dataUserAccept.removeChild(div);
 
+            }
         }
-    }
-});
+    });
+}
+
 // END RETURN_CANCEL_REQUEST_FRIEND

@@ -34,14 +34,20 @@ module.exports.reqFriend = async (res) => {
                 });
             }
 
-            // Ví dụ: gửi realtime cho user kia
-            const userReq = await User.findOne({
-                _id: idUser
+            // Ví dụ: gửi realtime cho B
+            const userAccept = await User.findOne({
+                _id: ID,
+
+            });
+            const newLength = userAccept.acceptFriends.length;
+            socket.broadcast.emit("RETURN_LENGTH_ACCEPT_FRIEND", {
+                IDUser: ID,
+                newLength: newLength
             });
             socket.broadcast.emit("RETURN_REQUEST_FRIEND", {
                 text: "Bạn có một lời mời kêt bạn",
-                IdReq: idUser,
-                infoUser: userReq
+                IdReq: ID,
+                infoUser: userAccept
             });
         });
 

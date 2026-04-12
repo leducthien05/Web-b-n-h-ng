@@ -7,7 +7,12 @@ div(class="friend-menu d-flex gap-2 mb-3")
     a(
         href="/friend/accept-friend"
         class="btn btn-primary"
-    ) Lời mời kết bạn
+    ) 
+        | Lời mời kết bạn
+        span(
+            class="badge badge-light"
+            badge-users-accept=user.id
+        ) #{user.acceptFriends.length}
 
     a(
         href="/friend/request-friend"

@@ -66,9 +66,9 @@ socket.on("RETURN_CANCEL_FRIEND", listID => {
 
 // Chức năng từ chối yêu cầu
 const listBtnRefureFriend = document.querySelectorAll("[btn-refuse-friend]");
-if(listBtnRefureFriend.length > 0){
-    listBtnRefureFriend.forEach(btn =>{
-        btn.addEventListener("click", ()=>{
+if (listBtnRefureFriend.length > 0) {
+    listBtnRefureFriend.forEach(btn => {
+        btn.addEventListener("click", () => {
             const idFriendRefure = btn.getAttribute("btn-refuse-friend");
             const parent = btn.closest(".friend-actions");
             parent.classList.remove("add");
@@ -81,9 +81,9 @@ if(listBtnRefureFriend.length > 0){
 
 // Chức năng chấp nhận yêu cầu
 const listBtnAcceptFriend = document.querySelectorAll("[btn-accept-friend]");
-if(listBtnAcceptFriend.length > 0){
-    listBtnAcceptFriend.forEach(btn =>{
-        btn.addEventListener("click", ()=>{
+if (listBtnAcceptFriend.length > 0) {
+    listBtnAcceptFriend.forEach(btn => {
+        btn.addEventListener("click", () => {
             const idFriendAccept = btn.getAttribute("btn-accept-friend");
             const parent = btn.closest(".friend-actions");
             parent.classList.remove("add");
@@ -93,3 +93,16 @@ if(listBtnAcceptFriend.length > 0){
     });
 }
 // Hết Chức năng chấp nhận yêu cầu
+
+// RETURN_LENGTH_ACCEPT_FRIEND
+const badgeAcceptFriends = document.querySelector("[badge-users-accept]");
+if (badgeAcceptFriends) {
+    const idUser = badgeAcceptFriends.getAttribute("badge-users-accept");
+    socket.on("RETURN_LENGTH_ACCEPT_FRIEND", data => {
+        if(idUser == data.IDUser){
+            badgeAcceptFriends.innerHTML = data.newLength;
+        }
+    });
+}
+
+// End RETURN_LENGTH_ACCEPT_FRIEND

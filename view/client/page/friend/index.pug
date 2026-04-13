@@ -38,7 +38,8 @@ block main
 
                         //- Nút bên phải
                         div(class="d-flex gap-2 friend-actions")
-                            button(
+                            a(
+                                href=`/chat/${friend.infoUser.room_chat_id}`
                                 class="btn btn-primary btn-sm btn-add"
                             ) Nhắn tin
 

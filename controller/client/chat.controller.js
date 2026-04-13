@@ -4,12 +4,15 @@ const Chat = require("../../model/chat.model");
 const chatSocketIO = require("../../socket/client/chat.socket");
 
 module.exports.chat = async (req, res)=>{
+    const room_chat_id = req.params.roomchatID;
+    console.log(room_chat_id);
     //SocketIO
-    chatSocketIO(res);
+    chatSocketIO(req, res);
     //End SocketIO
     
     const chat = await Chat.find({
-        deleted: false
+        deleted: false,
+        room_chat_id: room_chat_id
     });
     const userID = chat.map(item => item.user_id);
     const user = await User.find({

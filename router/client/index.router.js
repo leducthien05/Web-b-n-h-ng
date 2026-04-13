@@ -13,6 +13,7 @@ const infoUserMiddlware = require("../../middleware/client/user.middleware");
 const settingMiddleware = require("../../middleware/client/setting.middleware");
 const authMiddleware = require("../../middleware/client/auth.middleware");
 
+
 module.exports = (app) =>{
     app.use(categoryMiddleware.category);
     app.use(infoUserMiddlware.infoUser);
@@ -24,7 +25,7 @@ module.exports = (app) =>{
     app.use("/search", Search);
     app.use("/checkout", Checkout);
     app.use("/user", User);
-    app.use("/chat",authMiddleware.requireAuth ,Chat);
+    app.use("/chat", authMiddleware.requireAuth, Chat);
     app.use("/friend",authMiddleware.requireAuth ,Friend);
 };
 

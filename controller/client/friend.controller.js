@@ -81,7 +81,10 @@ module.exports.index = async (req, res) => {
         status: "active",
         deleted: false
     }).select("avatar username statusOnline");
-    console.log(friends)
+    for(let friend of friends){
+        const infoUser = listFriends.find(item => item.friend_id == friend._id);
+        friend.infoUser = infoUser;
+    }
     res.render("client/page/friend/index", {
         titlePage: "Lời mời đã gửi",
         friends: friends

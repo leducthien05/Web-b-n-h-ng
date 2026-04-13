@@ -179,3 +179,27 @@ if (dataUserAcceptCancel) {
 }
 
 // END RETURN_CANCEL_REQUEST_FRIEND
+
+// SERVER_RETURN_STATUS_ONLINE
+socket.on("SERVER_RETURN_STATUS_ONLINE", ID=>{
+    const boxFriend = document.querySelector("[data_friend]");
+    if(boxFriend){
+        const friend = boxFriend.querySelector(`[user_id="${ID.userID}"]`);
+        if(friend){
+            friend.querySelector(".status").classList.add("online")
+        };
+    }
+});
+// END SERVER_RETURN_STATUS_ONLINE
+
+// SERVER_RETURN_STATUS_OFFLINE
+socket.on("SERVER_RETURN_STATUS_OFFLINE", ID=>{
+    const boxFriend = document.querySelector("[data_friend]");
+    if(boxFriend){
+        const friend = boxFriend.querySelector(`[user_id="${ID.userID}"]`);
+        if(friend){
+            friend.querySelector(".status").classList.remove("online")
+        };
+    }
+});
+// END SERVER_RETURN_STATUS_OFFLINE

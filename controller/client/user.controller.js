@@ -6,57 +6,57 @@ const md5 = require("md5");
 const genereateHelper = require("../../helper/generateRandomString.helper");
 const sendMailHelper = require("../../helper/sendMail.helper");
 
-module.exports.register = async (req, res)=>{
+module.exports.register = async (req, res) => {
     res.render("client/page/user/register", {
         titlePage: "Đăng ký tài khoản"
     });
 }
 
-module.exports.registerPost = async (req, res)=>{
+module.exports.registerPost = async (req, res) => {
     const existEmail = await User.findOne({
         email: req.body.email,
         status: "active",
         deleted: false
     });
-    if(existEmail){
+    if (existEmail) {
         req.flash("error", "Email đã tồn tại! Vui lòng nhập email khác");
         res.redirect(req.get("referer") || "/");
         return;
-    }else{
+    } else {
         req.body.password = md5(req.body.password);
         const user = new User(req.body);
         await user.save();
         res.cookie("tokenUser", user.tokenUser);
         res.redirect("/");
     }
-    
+
 }
 
-module.exports.login = async (req, res)=>{
+module.exports.login = async (req, res) => {
     res.render("client/page/user/login", {
         titlePage: "Đăng nhập"
     });
 }
 
-module.exports.loginPost = async (req, res)=>{
+module.exports.loginPost = async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     const user = await User.findOne({
         email: email,
         deleted: false
     });
-    if(!user){
+    if (!user) {
         req.flash("error", "Email không tồn tại");
         res.redirect(req.get("referer") || "/");
         return;
     }
-    if(md5(password) != user.password){
+    if (md5(password) != user.password) {
         req.flash("error", "Mật khẩu không đúng");
         res.redirect(req.get("referer") || "/");
         return;
     }
 
-    if(user.status != "active"){
+    if (user.status != "active") {
         req.flash("error", "Tài khoản đã bị khóa");
         res.redirect(req.get("referer") || "/");
         return;
@@ -64,11 +64,11 @@ module.exports.loginPost = async (req, res)=>{
     const cart = await Cart.findOne({
         user_id: user._id
     });
-    if(!cart){
+    if (!cart) {
         await Cart.updateOne({
             _id: req.cookies.cartID
-        }, {user_id: user._id});
-    }else{
+        }, { user_id: user._id });
+    } else {
         res.cookie("cartID", cart._id);
     }
 
@@ -80,42 +80,53 @@ module.exports.loginPost = async (req, res)=>{
             statusOnline: "online"
         }
     });
+    _io.on("connection", (socket) => {
+        socket.broadcast.emit("SERVER_RETURN_STATUS_ONLINE", {
+            userID: user._id
+        });
+    });
     res.redirect("/");
 }
 
-module.exports.logout = async (req, res)=>{
+module.exports.logout = async (req, res) => {
     await User.updateOne({
         tokenUser: req.cookies.tokenUser
     }, {
         $set: {
-            statusOnline: "online"
+            statusOnline: "offline"
         }
+    });
+    _io.once("connection", (socket) => {
+        socket.broadcast.emit("SERVER_RETURN_STATUS_OFFLINE", {
+            userID: res.locals.user._id
+        });
+
     });
     res.clearCookie("tokenUser");
     res.clearCookie("cartID");
     res.redirect("/");
 }
 
-module.exports.forgotPassword = async (req, res)=>{
+module.exports.forgotPassword = async (req, res) => {
     res.render("client/page/user/forgot-password", {
         titlePage: "Quên mật khẩu"
     });
 }
 
-module.exports.forgotPasswordPost = async (req, res)=>{
+module.exports.forgotPasswordPost = async (req, res) => {
     const email = req.body.email;
     const user = await User.findOne({
         email: email,
         status: "active",
         deleted: false
     });
-    if(!user){
+    if (!user) {
         req.flash("error", "Email không tồn tại!");
         res.redirect(req.get("referer") || "/");
         return;
     }
     //Lưu thông tin vào DB
-        //Tạo OTP
+    //Tạo OTP
     const otp = genereateHelper.generateRandomNumber(6);
 
     const objectForgotPass = {
@@ -133,12 +144,12 @@ module.exports.forgotPasswordPost = async (req, res)=>{
         Mã OTP để lấy lại mật khẩu là <b>${otp}</b>. Sẽ hết hạn sau 3 phút
     `
     sendMailHelper.sendMail(toEmail, subject, html);
-    
+
 
     res.redirect(`/user/password/otp?email=${email}`);
 }
 
-module.exports.otpGet = async (req, res)=>{
+module.exports.otpGet = async (req, res) => {
     const email = req.query.email;
     console.log(email);
     res.render("client/page/user/otp", {
@@ -147,7 +158,7 @@ module.exports.otpGet = async (req, res)=>{
     })
 }
 
-module.exports.otpPost = async (req, res)=>{
+module.exports.otpPost = async (req, res) => {
     const email = req.body.email;
     const otp = req.body.otp;
     const result = await Forgot.findOne({
@@ -155,7 +166,7 @@ module.exports.otpPost = async (req, res)=>{
         otp: otp
     });
     console.log(result);
-    if(!result){
+    if (!result) {
         req.flash("error", "Mã OTP đã hết hạn!");
         res.redirect(req.get("referer") || "/");
         return;
@@ -167,24 +178,24 @@ module.exports.otpPost = async (req, res)=>{
     res.redirect("/user/password/reset-password");
 }
 
-module.exports.resetPassword = async (req, res)=>{
+module.exports.resetPassword = async (req, res) => {
     res.render("client/page/user/reset-password", {
         titlePage: "Đổi mật khẩu"
     })
 }
 
-module.exports.resetPasswordPost = async (req, res)=>{
+module.exports.resetPasswordPost = async (req, res) => {
     const tokenUser = req.cookies.tokenUser;
     const password = md5(req.body.password);
 
     await User.updateOne({
         tokenUser: tokenUser
-    }, {password: password});
+    }, { password: password });
 
     res.redirect("/")
 }
 
-module.exports.info = async (req, res)=>{
+module.exports.info = async (req, res) => {
     res.render("client/page/user/info", {
         titlePage: "Thông tin tài khoản"
     })

@@ -963,15 +963,6 @@ button.btn-primary {
     background: #ccc;
 }
 
-.status-dot.online {
+.status.online .status-dot {
     background: #28a745;
-}
-
-.status-text {
-    font-size: 12px;
-    color: #888;
-}
-
-.status-text.online {
-    color: #28a745;
 }

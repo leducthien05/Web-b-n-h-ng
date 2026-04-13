@@ -9,6 +9,7 @@ module.exports.requireAuth = async (req, res, next)=>{
             tokenUser: req.cookies.tokenUser
         }).select("-password");
         if(record){
+            
             res.locals.user = record;
             next();
         }else{

@@ -1,0 +1,46 @@
+extends ../../layout/default
+include ../../mixin/list-friend.pug
+
+block main 
+    .create-group-container
+        h2 Tạo nhóm chat
+        form(
+            action="/room-chat/create", 
+            method="POST"
+        )   
+            .form-group
+                label(
+                    for="title"
+                ) Tên nhóm
+                input(
+                    class="groupName" 
+                    type="text" 
+                    name="title" 
+                    placeholder="Nhập tên nhóm..." 
+                    required
+                )
+
+            //- .form-group
+            //-     label Ảnh nhóm
+            //-     input(type="file" name="avatar" accept="image/*")
+
+            .form-group
+                label Thêm thành viên
+                .user-list
+                    each friend in user.infoFriend
+                        .user-item
+                            input(
+                                type="checkbox" 
+                                name="user_id" 
+                                value=friend._id
+                                id="friend"
+                            )
+                            lable(
+                                for="friend"
+                            ) #{friend.username}
+
+            .form-group
+                button(type="submit") Tạo nhóm
+                            
+block script
+    script(src="/client/JS/friend.js") 

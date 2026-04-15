@@ -966,3 +966,151 @@ button.btn-primary {
 .status.online .status-dot {
     background: #28a745;
 }
+
+/* create nhóm chat */
+.create-group-container {
+    width: 500px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #12bbd9;
+    border-radius: 10px;
+    color: #fff;
+}
+.create-group-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+} */
+
+.form-group label {
+    margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="file"] {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+}
+
+.user-list {
+    max-height: 150px;
+    overflow-y: auto;
+    background: #0d9dc5;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.user-item span {
+    margin-left: 8px;
+} */
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #4cafef;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #3793d6;
+}
+/* list group chat */
+.group-list-container {
+    width: 600px;
+    margin: 30px auto;
+    background: #033770;
+    padding: 20px;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.create-btn {
+    text-decoration: none;
+    background: #4cafef;
+    padding: 8px 12px;
+    border-radius: 5px;
+    color: white;
+}
+
+.create-btn:hover {
+    background: #3793d6;
+}
+
+.empty {
+    text-align: center;
+    color: #aaa;
+}
+
+.group-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.group-item {
+    display: flex;
+    align-items: center;
+    background: #0683ea;
+    padding: 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    transition: 0.2s;
+}
+
+.group-item:hover {
+    background: #3a3a55;
+}
+
+.avatar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.info {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.info h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.info p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: #aaa;
+}
+
+.meta {
+    font-size: 12px;
+    color: #ccc;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

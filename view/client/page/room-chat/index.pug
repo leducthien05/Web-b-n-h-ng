@@ -1,0 +1,41 @@
+extends ../../layout/default
+include ../../mixin/list-friend.pug
+
+block main 
+
+    .group-list-container
+        .header
+            h2 Danh sách nhóm chat
+            a(
+                class="create-btn" 
+                href="/room-chat/create"
+            ) + Tạo nhóm
+
+        if(room.length === 0)
+            p(class="empty") Bạn chưa tham gia nhóm nào
+        else
+            div(class="group-list")
+                each group in room
+                    a(
+                        class="group-item" 
+                        href=`/chat/${group._id}`
+                    )
+                        .avatar
+                            if( group.avatar)
+                                img(src=group.avatar)
+                            else
+                                img(src="/images/default-group.png")
+                            
+                        .info
+                            h3 #{group.tilte}
+                            p Thành viên: 
+                                p #{group.user.length}
+
+                        //- .meta
+                            //- if group.lastMessage
+                            //-     span.last-message= group.lastMessage.content
+                            //- else
+                            //-     span.last-message Chưa có tin nhắn
+                            
+block script
+    script(src="/client/JS/friend.js") 

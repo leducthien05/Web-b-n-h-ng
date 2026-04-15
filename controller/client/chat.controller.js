@@ -5,7 +5,6 @@ const chatSocketIO = require("../../socket/client/chat.socket");
 
 module.exports.chat = async (req, res)=>{
     const room_chat_id = req.params.roomchatID;
-    console.log(room_chat_id);
     //SocketIO
     chatSocketIO(req, res);
     //End SocketIO

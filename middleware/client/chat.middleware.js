@@ -3,7 +3,6 @@ const User = require("../../model/user.model");
 
 module.exports.chat = async (req, res, next)=>{
     const room_id = req.params.roomchatID;
-    console.log(room_id)
     if(room_id){
         const room = await Room.findOne({
             _id: room_id
